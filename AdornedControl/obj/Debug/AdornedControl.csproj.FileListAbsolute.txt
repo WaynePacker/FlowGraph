@@ -1,0 +1,14 @@
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\AdornedControl.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\AdornedControl.pdb
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.csprojResolveAssemblyReference.cache
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.pdb
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\Utils.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\Utils.pdb
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\bin\Debug\AdornedControl.dll
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\bin\Debug\AdornedControl.pdb
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\bin\Debug\Utils.dll
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\bin\Debug\Utils.pdb
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\obj\Debug\AdornedControl.csprojResolveAssemblyReference.cache
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\obj\Debug\AdornedControl.dll
+C:\Users\Anthony\Documents\GitHub\FlowGraph\AdornedControl\obj\Debug\AdornedControl.pdb

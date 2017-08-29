@@ -1,0 +1,171 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+    This resource directionary contains the text and style for the help text
+    that is displayed in window.
+    I have put it in a separate resource file just to keep it separate from the main
+    sample code.
+    -->
+
+    <FlowDocument
+        x:Key="helpText"
+        >
+        <Paragraph>
+            <Bold>
+                Existing Mouse and Keyboard Controls
+            </Bold>
+        </Paragraph>
+        <List>
+            <ListItem>
+                <Paragraph>
+                    Left mouse click selects a node.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Left click in empty space deselects.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Ctrl + left click multi-selects.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Left-dragging a node moves it.
+                    Multiple-selected nodes can be dragged all at the same time.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Ctrl + left mouse-drag outside a node drag-selects.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Ctrl + A selects all.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Ctrl + I inverts the selection.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Escape clears the selection.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Right-click invokes up a context menu that can be used to create a new node.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    The delete key deletes selected nodes.
+                </Paragraph>
+            </ListItem>
+        </List>
+        <Paragraph>
+            <Bold>
+                New or Modified Mouse and Keyboard Controls
+            </Bold>
+        </Paragraph>
+        <List>
+            <ListItem>
+                <Paragraph>
+                    Left-drag a connector to create a connection.  To finalize creation of the connection 
+                    continue to drag it until you can drop in on a different connector that is valid.  
+                    Remember that inputs can only be connected to outputs, and vice-versa.  Inputs cannot
+                    be connect inputs and outputs cannot be connected to outputs.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Note that feedback icons are displayed when you drag the end of a connection over a connector.
+                    The 'connection ok' icon is displayed if you have dragged over a valid connector and the connection
+                    will be created successfully.  The 'connection bad' icon is displayed if you have dragged over an
+                    invalid connection, if you drop the end of the connection here the connection will be deleted.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Hovering the mouse cursor over a connection will popup a 'scissors' icon (implemented as an adorner).
+                    Click on the icon to delete the connection.
+                </Paragraph>
+            </ListItem>
+        </List>
+        <Paragraph>
+            <Bold>
+                New Zoom and Pan Controls
+            </Bold>
+        </Paragraph>
+        <List>
+            <ListItem>
+                <Paragraph>
+                    Zoom and Pan functionality has been carried across from my previous article on the ZoomAndPanControl.
+                    Please see the CodeProject article for details.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Use the scrollbars or click and drag with the left mouse-button to pan the viewport.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    The mouse-wheel is used to zoom in and out.  
+                    Additionally the plus key or shift + left mouse-button click zooms in,
+                    the minus key or shift + right mouse-button click zooms out.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Holding shift and dragging while holding down the left mouse-button drags
+                    out a 'zoom rectangle', when you let go of the left mouse-button the view zooms in on
+                    that rectangle.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Pressing backspace key returns the viewport to the previous zoom level.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    The buttons in the toolbar at bottom right of the main window can also be used to invoke 
+                    various zoom operations.
+                </Paragraph>
+            </ListItem>
+        </List>
+        <Paragraph>
+            <Bold>
+                Overview Window
+            </Bold>
+        </Paragraph>
+        <List>
+            <ListItem>
+                <Paragraph>
+                    The overview window which is underneath the main window has also been 
+                    carried across from my previous article about the ZoomAndPanControl.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    Single click anywhere in the overview to move the yellow 'viewport rectangle' to 
+                    the clicked location.  This pans the viewport in the main window to that location.
+                </Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>
+                    The yellow 'viewport rectangle' can also be left dragged to any location.
+                </Paragraph>
+            </ListItem>
+        </List>
+    </FlowDocument>
+
+</ResourceDictionary>

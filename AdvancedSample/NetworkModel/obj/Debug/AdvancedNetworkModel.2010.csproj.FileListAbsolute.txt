@@ -1,0 +1,7 @@
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\bin\Debug\NetworkModel.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\bin\Debug\NetworkModel.pdb
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\bin\Debug\Utils.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\bin\Debug\Utils.pdb
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\obj\Debug\AdvancedNetworkModel.2010.csprojResolveAssemblyReference.cache
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\obj\Debug\NetworkModel.dll
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdvancedSample\NetworkModel\obj\Debug\NetworkModel.pdb

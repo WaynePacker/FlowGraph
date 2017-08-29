@@ -1,0 +1,6 @@
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\obj\Debug\FlowGraph.csprojResolveAssemblyReference.cache
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\obj\Debug\MainWindow.g.cs
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\obj\Debug\App.g.cs
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\obj\Debug\FlowGraph_MarkupCompile.cache
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\obj\Debug\FlowGraph_MarkupCompile.lref
+D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\FlowGraph\bin\Debug\FlowGraph.exe.config
