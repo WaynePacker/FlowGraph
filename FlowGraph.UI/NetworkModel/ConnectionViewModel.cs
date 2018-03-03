@@ -54,7 +54,7 @@ namespace FlowGraph.UI.NetworkModel
                 if (sourceConnector != null)
                 {
                     sourceConnector.AttachedConnections.Remove(this);
-                    sourceConnector.HotspotUpdated -= new EventHandler<EventArgs>(sourceConnector_HotspotUpdated);
+                    sourceConnector.HotspotUpdated -= new EventHandler<EventArgs>(SourceConnector_HotspotUpdated);
                 }
 
                 sourceConnector = value;
@@ -62,11 +62,11 @@ namespace FlowGraph.UI.NetworkModel
                 if (sourceConnector != null)
                 {
                     sourceConnector.AttachedConnections.Add(this);
-                    sourceConnector.HotspotUpdated += new EventHandler<EventArgs>(sourceConnector_HotspotUpdated);
+                    sourceConnector.HotspotUpdated += new EventHandler<EventArgs>(SourceConnector_HotspotUpdated);
                     this.SourceConnectorHotspot = sourceConnector.Hotspot;
                 }
 
-                OnPropertyChanged("SourceConnector");
+                RaisePropertyChanged("SourceConnector");
                 OnConnectionChanged();
             }
         }
@@ -90,7 +90,7 @@ namespace FlowGraph.UI.NetworkModel
                 if (destConnector != null)
                 {
                     destConnector.AttachedConnections.Remove(this);
-                    destConnector.HotspotUpdated -= new EventHandler<EventArgs>(destConnector_HotspotUpdated);
+                    destConnector.HotspotUpdated -= new EventHandler<EventArgs>(DestConnector_HotspotUpdated);
                 }
 
                 destConnector = value;
@@ -98,11 +98,11 @@ namespace FlowGraph.UI.NetworkModel
                 if (destConnector != null)
                 {
                     destConnector.AttachedConnections.Add(this);
-                    destConnector.HotspotUpdated += new EventHandler<EventArgs>(destConnector_HotspotUpdated);
+                    destConnector.HotspotUpdated += new EventHandler<EventArgs>(DestConnector_HotspotUpdated);
                     this.DestConnectorHotspot = destConnector.Hotspot;
                 }
 
-                OnPropertyChanged("DestConnector");
+                RaisePropertyChanged("DestConnector");
                 OnConnectionChanged();
             }
         }
@@ -122,7 +122,7 @@ namespace FlowGraph.UI.NetworkModel
 
                 ComputeConnectionPoints();
 
-                OnPropertyChanged("SourceConnectorHotspot");
+                RaisePropertyChanged("SourceConnectorHotspot");
             }
         }
 
@@ -138,7 +138,7 @@ namespace FlowGraph.UI.NetworkModel
 
                 ComputeConnectionPoints();
 
-                OnPropertyChanged("DestConnectorHotspot");
+                RaisePropertyChanged("DestConnectorHotspot");
             }
         }
 
@@ -147,16 +147,8 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         public PointCollection Points
         {
-            get
-            {
-                return points;
-            }
-            set
-            {
-                points = value;
-
-                OnPropertyChanged("Points");
-            }
+            get { return points; }
+            set { SetAndNotify(ref points, value); }
         }
 
         /// <summary>
@@ -171,16 +163,13 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         private void OnConnectionChanged()
         {
-            if (ConnectionChanged != null)
-            {
-                ConnectionChanged(this, EventArgs.Empty);
-            }
+            ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
         /// Event raised when the hotspot of the source connector has been updated.
         /// </summary>
-        private void sourceConnector_HotspotUpdated(object sender, EventArgs e)
+        private void SourceConnector_HotspotUpdated(object sender, EventArgs e)
         {
             this.SourceConnectorHotspot = this.SourceConnector.Hotspot;
         }
@@ -188,7 +177,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised when the hotspot of the dest connector has been updated.
         /// </summary>
-        private void destConnector_HotspotUpdated(object sender, EventArgs e)
+        private void DestConnector_HotspotUpdated(object sender, EventArgs e)
         {
             this.DestConnectorHotspot = this.DestConnector.Hotspot;
         }

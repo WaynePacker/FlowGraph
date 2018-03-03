@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Utils
@@ -20,10 +16,7 @@ namespace Utils
 
 #endif //  DEBUG
 
-        /// <summary>
-        /// Raises the PropertyChanged event.
-        /// </summary>
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -40,9 +33,6 @@ namespace Utils
             return false;
         }
 
-        /// <summary>
-        /// Event raised to indicate that a property value has changed.
-        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

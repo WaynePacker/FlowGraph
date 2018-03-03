@@ -31,7 +31,6 @@ F:\Documents\CodeProject\c#\NetworkViewSampleCode\ZoomAndPan\obj\Debug\ZoomAndPa
 F:\Documents\CodeProject\c#\NetworkViewSampleCode\ZoomAndPan\obj\Debug\ZoomAndPan.pdb
 F:\Documents\GitHub\FlowGraph\ZoomAndPan\bin\Debug\ZoomAndPan.dll
 F:\Documents\GitHub\FlowGraph\ZoomAndPan\bin\Debug\ZoomAndPan.pdb
-F:\Documents\GitHub\FlowGraph\ZoomAndPan\obj\Debug\ZoomAndPan.csprojResolveAssemblyReference.cache
 F:\Documents\GitHub\FlowGraph\ZoomAndPan\obj\Debug\GeneratedInternalTypeHelper.g.cs
 F:\Documents\GitHub\FlowGraph\ZoomAndPan\obj\Debug\ZoomAndPan_MarkupCompile.cache
 F:\Documents\GitHub\FlowGraph\ZoomAndPan\obj\Debug\ZoomAndPan_MarkupCompile.lref

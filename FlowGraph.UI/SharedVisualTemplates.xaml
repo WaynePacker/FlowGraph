@@ -84,7 +84,7 @@
                 VerticalAlignment="Center" />
         </Grid>
     </DataTemplate>
-
+    
     <!-- 
     A data-template that defines the UI for output connectors.
     -->

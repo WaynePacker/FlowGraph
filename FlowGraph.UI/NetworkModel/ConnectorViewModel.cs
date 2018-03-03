@@ -157,8 +157,8 @@ namespace FlowGraph.UI.NetworkModel
                 // The first connection has been added, notify the data-binding system that
                 // 'IsConnected' should be re-evaluated.
                 //
-                OnPropertyChanged("IsConnectionAttached");
-                OnPropertyChanged("IsConnected");
+                RaisePropertyChanged("IsConnectionAttached");
+                RaisePropertyChanged("IsConnected");
             }
         }
 
@@ -178,8 +178,8 @@ namespace FlowGraph.UI.NetworkModel
                 // No longer connected to anything, notify the data-binding system that
                 // 'IsConnected' should be re-evaluated.
                 //
-                OnPropertyChanged("IsConnectionAttached");
-                OnPropertyChanged("IsConnected");
+                RaisePropertyChanged("IsConnectionAttached");
+                RaisePropertyChanged("IsConnected");
             }
         }
 
@@ -188,8 +188,8 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         private void connection_ConnectionChanged(object sender, EventArgs e)
         {
-            OnPropertyChanged("IsConnectionAttached");
-            OnPropertyChanged("IsConnected");
+            RaisePropertyChanged("IsConnectionAttached");
+            RaisePropertyChanged("IsConnected");
         }
 
         /// <summary>
@@ -197,12 +197,8 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         private void OnHotspotUpdated()
         {
-            OnPropertyChanged("Hotspot");
-
-            if (HotspotUpdated != null)
-            {
-                HotspotUpdated(this, EventArgs.Empty);
-            }
+            RaisePropertyChanged("Hotspot");
+            HotspotUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion Private Methods

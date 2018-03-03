@@ -72,16 +72,8 @@ namespace FlowGraph.UI
         /// </summary>
         public NetworkViewModel Network
         {
-            get
-            {
-                return network;
-            }
-            set
-            {
-                network = value;
-
-                OnPropertyChanged("Network");
-            }
+            get { return network; }
+            set { SetAndNotify(ref network, value); }
         }
 
         ///
@@ -89,16 +81,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentScale
         {
-            get
-            {
-                return contentScale;
-            }
-            set
-            {
-                contentScale = value;
-
-                OnPropertyChanged("ContentScale");
-            }
+            get { return contentScale; }
+            set { SetAndNotify(ref contentScale, value); }
         }
 
         ///
@@ -106,16 +90,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentOffsetX
         {
-            get
-            {
-                return contentOffsetX;
-            }
-            set
-            {
-                contentOffsetX = value;
-
-                OnPropertyChanged("ContentOffsetX");
-            }
+            get { return contentOffsetX; }
+            set { SetAndNotify(ref contentOffsetX, value); }
         }
 
         ///
@@ -123,16 +99,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentOffsetY
         {
-            get
-            {
-                return contentOffsetY;
-            }
-            set
-            {
-                contentOffsetY = value;
-
-                OnPropertyChanged("ContentOffsetY");
-            }
+            get { return contentOffsetY; }
+            set { SetAndNotify(ref contentOffsetY, value); }
         }
 
         ///
@@ -140,16 +108,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentWidth
         {
-            get
-            {
-                return contentWidth;
-            }
-            set
-            {
-                contentWidth = value;
-
-                OnPropertyChanged("ContentWidth");
-            }
+            get { return contentWidth; }
+            set { SetAndNotify(ref contentWidth, value); }
         }
 
         ///
@@ -157,16 +117,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentHeight
         {
-            get
-            {
-                return contentHeight;
-            }
-            set
-            {
-                contentHeight = value;
-
-                OnPropertyChanged("ContentHeight");
-            }
+            get { return contentHeight; }
+            set { SetAndNotify(ref contentHeight, value); }
         }
 
         ///
@@ -176,16 +128,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentViewportWidth
         {
-            get
-            {
-                return contentViewportWidth;
-            }
-            set
-            {
-                contentViewportWidth = value;
-
-                OnPropertyChanged("ContentViewportWidth");
-            }
+            get { return contentViewportWidth; }
+            set { SetAndNotify(ref contentViewportWidth, value); }
         }
 
         ///
@@ -195,16 +139,8 @@ namespace FlowGraph.UI
         /// 
         public double ContentViewportHeight
         {
-            get
-            {
-                return contentViewportHeight;
-            }
-            set
-            {
-                contentViewportHeight = value;
-
-                OnPropertyChanged("ContentViewportHeight");
-            }
+            get { return contentViewportHeight; }
+            set { SetAndNotify(ref contentViewportHeight, value); }
         }
 
         /// <summary>
@@ -217,21 +153,50 @@ namespace FlowGraph.UI
             //
             var connection = new ConnectionViewModel();
 
-            if (draggedOutConnector.Type == ConnectorType.Output)
+            switch (draggedOutConnector.Type)
             {
-                //
-                // The user is dragging out a source connector (an output) and will connect it to a destination connector (an input).
-                //
-                connection.SourceConnector = draggedOutConnector;
-                connection.DestConnectorHotspot = curDragPoint;
-            }
-            else
-            {
-                //
-                // The user is dragging out a destination connector (an input) and will connect it to a source connector (an output).
-                //
-                connection.DestConnector = draggedOutConnector;
-                connection.SourceConnectorHotspot = curDragPoint;
+                case ConnectorType.Undefined:
+                    break;
+                case ConnectorType.Input:
+                    {
+                        //
+                        // The user is dragging out a destination connector (an input) and will connect it to a source connector (an output).
+                        //
+                        connection.DestConnector = draggedOutConnector;
+                        connection.SourceConnectorHotspot = curDragPoint;
+                    }
+                    break;
+                case ConnectorType.Output:
+                    {
+                        //
+                        // The user is dragging out a source connector (an output) and will connect it to a destination connector (an input).
+                        //
+                        connection.SourceConnector = draggedOutConnector;
+                        connection.DestConnectorHotspot = curDragPoint;
+                    }
+                    break;
+                case ConnectorType.Parent:
+                    {
+                        //
+                        // The user is dragging out a parent connector (an input) and will connect it to a child connector (an output).
+                        //
+                        connection.DestConnector = draggedOutConnector;
+                        connection.SourceConnectorHotspot = curDragPoint;
+                    }
+                    break;
+                case ConnectorType.Child:
+                    {
+                        {
+                            //
+                            // The user is dragging out a child connector (an output) and will connect it to a parent connector (an input).
+                            //
+                            connection.SourceConnector = draggedOutConnector;
+                            connection.DestConnectorHotspot = curDragPoint;
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
 
             //

@@ -16,7 +16,6 @@ F:\Documents\CodeProject\c#\NetworkViewSampleCode\Utils\obj\Debug\Utils.dll
 F:\Documents\CodeProject\c#\NetworkViewSampleCode\Utils\obj\Debug\Utils.pdb
 F:\Documents\GitHub\FlowGraph\Utils\bin\Debug\Utils.dll
 F:\Documents\GitHub\FlowGraph\Utils\bin\Debug\Utils.pdb
-F:\Documents\GitHub\FlowGraph\Utils\obj\Debug\Utils.csprojResolveAssemblyReference.cache
 F:\Documents\GitHub\FlowGraph\Utils\obj\Debug\Utils.csproj.CoreCompileInputs.cache
 F:\Documents\GitHub\FlowGraph\Utils\obj\Debug\Utils.dll
 F:\Documents\GitHub\FlowGraph\Utils\obj\Debug\Utils.pdb

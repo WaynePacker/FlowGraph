@@ -47,6 +47,7 @@ namespace FlowGraph.UI
         private void networkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
         {
             var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
+
             var curDragPoint = Mouse.GetPosition(networkControl);
 
             //

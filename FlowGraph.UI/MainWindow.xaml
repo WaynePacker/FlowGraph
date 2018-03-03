@@ -114,9 +114,7 @@
             Template for the button that is used to delete nodes and connections in the graph.
             This button is displayed in an adorner when the user hovers the mouse over a node or connection.
             -->
-            <ControlTemplate x:Key="deleteButtonTemplate"
-                TargetType="{x:Type Button}"
-                >
+            <ControlTemplate x:Key="deleteButtonTemplate" TargetType="{x:Type Button}" >
                 <Grid
                     x:Name="grid"
                     >
@@ -296,18 +294,11 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <!-- spacer -->
-                            <RowDefinition Height="2" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-
-                        <!-- The name of the node. -->
-                        <TextBlock Grid.Column="0"
-                                   Grid.ColumnSpan="3"
-                                   Grid.Row="0"
-                                   Text="{Binding Name}"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
 
                         <Button Grid.Column="3"
                                 Grid.Row="0"
@@ -336,17 +327,57 @@
 
                         </Button>
 
+                        <!-- The name of the node. -->
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   Text="{Binding Name}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Focusable="True"
+                                   Cursor="Hand"/>
+
+
+                        <!--Parent Connector : Wrap in stack panel for correct cursor-->
+
+                        <StackPanel Grid.Column="0" Grid.Row="1" Cursor="Hand">
+                            <NetworkUI:ConnectorItem 
+                                                 DataContext="{Binding ParentNodeConnection}"
+                                                 Width="15"
+                                                 Height="15"
+                                                 HorizontalAlignment="Left" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Grid.Row="1" Cursor="Hand">
+                            <NetworkUI:ConnectorItem 
+                                                 DataContext="{Binding ChildNodeConnection}"
+                                                 Width="15"
+                                                 Height="15"
+                                                 HorizontalAlignment="Right" />
+                        </StackPanel>
+
+                        <!--<NetworkUI:ConnectorItem Grid.Column="0"
+                                                 Grid.Row="1" 
+                                                 Width="15"
+                                                 Height="15"
+                                                 HorizontalAlignment="Left"/>-->
+                        <!--Child Connector-->
+                        <!--<NetworkUI:ConnectorItem Grid.Column="2"
+                                                 Grid.Row="1" 
+                                                 Width="15"
+                                                 Height="15"
+                                                 Cursor="Hand"
+                                                 HorizontalAlignment="Right"/>-->
 
                         <!-- Displays the node's input connectors. -->
                         <ItemsControl Grid.Column="0"
-                                      Grid.Row="2"
+                                      Grid.Row="3"
                                       ItemsSource="{Binding InputConnectors}"
                                       ItemTemplate="{StaticResource inputConnectorTemplate}"
                                       Focusable="False" />
 
                         <!-- Displays the node's output connectors. -->
                         <ItemsControl Grid.Column="2"
-                                      Grid.Row="2"
+                                      Grid.Row="3"
                                       ItemsSource="{Binding OutputConnectors}"
                                       ItemTemplate="{StaticResource outputConnectorTemplate}"
                                       Focusable="False" />

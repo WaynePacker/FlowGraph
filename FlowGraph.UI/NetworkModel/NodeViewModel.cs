@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using Utils;
 using System.Windows;
+using Utils;
 
 namespace FlowGraph.UI.NetworkModel
 {
@@ -18,6 +16,16 @@ namespace FlowGraph.UI.NetworkModel
 
         private const string defaultInputConnectorName = "Input";
         private const string defaultOutputConnectorName = "Output";
+
+        private bool isRootNode = false;
+        private bool isBranch = false;
+
+        //Each node will have one parent and one child nodes
+        // exceptions to this will be starting nodes which will only have a child node
+        // and also nodes whos' output connectors are also Nodes like a branch( e.g an if then else statement i.e there are two paths)
+        private ConnectorViewModel parentNodeConnection;
+        private ConnectorViewModel childNodeConnection;
+
         /// <summary>
         /// The name of the node.
         /// </summary>
@@ -66,16 +74,25 @@ namespace FlowGraph.UI.NetworkModel
 
         #endregion Private Data Members
 
-        public NodeViewModel()
-        { }
+        public NodeViewModel() {
 
-        public NodeViewModel(string name)
+            ParentNodeConnection = new ConnectorViewModel("Parent");
+            ChildNodeConnection = new ConnectorViewModel("Child");
+
+            ParentNodeConnection.ParentNode = null;
+            ParentNodeConnection.Type = ConnectorType.Parent;
+
+            ChildNodeConnection.ParentNode = this;
+            ChildNodeConnection.Type = ConnectorType.Child;
+        }
+
+        public NodeViewModel(string name): this()
         {
             this.name = name;
         }
 
         public NodeViewModel(string name, Point nodeLocation)
-            :this(name)
+            : this(name)
         {
             this.X = nodeLocation.X;
             this.Y = nodeLocation.Y;
@@ -86,7 +103,7 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         public string Name
         {
-            get { return name; } 
+            get { return name; }
             set { SetAndNotify(ref name, value); }
         }
 
@@ -131,10 +148,10 @@ namespace FlowGraph.UI.NetworkModel
             get { return size; }
             set
             {
-                if(SetAndNotify(ref size, value))
+                if (SetAndNotify(ref size, value))
                 {
                     SizeChanged?.Invoke(this, EventArgs.Empty);
-                }               
+                }
             }
         }
 
@@ -156,8 +173,8 @@ namespace FlowGraph.UI.NetworkModel
                 if (inputConnectors == null)
                 {
                     inputConnectors = new ImpObservableCollection<ConnectorViewModel>();
-                    inputConnectors.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(inputConnectors_ItemsAdded);
-                    inputConnectors.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(inputConnectors_ItemsRemoved);
+                    inputConnectors.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(InputConnectors_ItemsAdded);
+                    inputConnectors.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(InputConnectors_ItemsRemoved);
                 }
 
                 return inputConnectors;
@@ -174,8 +191,8 @@ namespace FlowGraph.UI.NetworkModel
                 if (outputConnectors == null)
                 {
                     outputConnectors = new ImpObservableCollection<ConnectorViewModel>();
-                    outputConnectors.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(outputConnectors_ItemsAdded);
-                    outputConnectors.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(outputConnectors_ItemsRemoved);
+                    outputConnectors.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(OutputConnectors_ItemsAdded);
+                    outputConnectors.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(OutputConnectors_ItemsRemoved);
                 }
 
                 return outputConnectors;
@@ -201,6 +218,12 @@ namespace FlowGraph.UI.NetworkModel
                     attachedConnections.AddRange(connector.AttachedConnections);
                 }
 
+                if (!isRootNode)
+                    attachedConnections.AddRange(ParentNodeConnection.AttachedConnections);
+
+                if(!isBranch)
+                    attachedConnections.AddRange(ChildNodeConnection.AttachedConnections);
+
                 return attachedConnections;
             }
         }
@@ -210,16 +233,32 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         public bool IsSelected
         {
-            get { return isSelected; }           
+            get { return isSelected; }
             set { SetAndNotify(ref isSelected, value); }
         }
+
+    
+
+        public ConnectorViewModel ParentNodeConnection
+        {
+            get { return parentNodeConnection; }
+            set { SetAndNotify(ref parentNodeConnection, value); }
+        }
+
+
+        public ConnectorViewModel ChildNodeConnection
+        {
+            get { return childNodeConnection; }
+            set { SetAndNotify(ref childNodeConnection, value); }
+        }
+
 
         #region Private Methods
 
         /// <summary>
         /// Event raised when connectors are added to the node.
         /// </summary>
-        private void inputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void InputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -231,7 +270,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised when connectors are removed from the node.
         /// </summary>
-        private void inputConnectors_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void InputConnectors_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -243,7 +282,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised when connectors are added to the node.
         /// </summary>
-        private void outputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void OutputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -255,7 +294,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised when connectors are removed from the node.
         /// </summary>
-        private void outputConnectors_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void OutputConnectors_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
