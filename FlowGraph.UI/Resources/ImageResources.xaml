@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FlowGraph.Resources">
+
+    
+    <Style TargetType="ContentControl" x:Key="CancelImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox>
+                        <Canvas Width="50" Height="50">
+                            <Path Data="m 8.5820312,279.95898 c -2.1687968,0 -4.3390808,0.82346 -5.9882812,2.47266 -3.29839687,3.2984 -3.29839675,8.67621 
+                                  0,11.97461 3.2984008,3.2984 8.676209,3.2984 11.974609,0 3.298397,-3.2984 3.298397,-8.67621 0,-11.97461 -1.6492,-1.6492 
+                                  -3.817531,-2.47266 -5.9863278,-2.47266 z m 0,1.90235 c 1.6750228,0 3.3492768,0.64029 4.6328128,1.92383 2.567067,2.56707 
+                                  2.567067,6.7005 0,9.26757 -2.567071,2.56708 -6.7005078,2.56708 -9.2675784,0 -2.5670674,-2.56707 -2.5670675,-6.7005 
+                                  0,-9.26757 1.2835353,-1.28354 2.9597425,-1.92383 4.6347656,-1.92383 z"
+                                  Fill="{TemplateBinding Foreground}" />
+                            <Path Data="M 13.809654,283.19084 3.3527342,293.64776" Fill="{TemplateBinding Foreground}" />
+                        </Canvas>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+
+</ResourceDictionary>
