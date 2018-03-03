@@ -12,8 +12,8 @@
     x:Name="mainWindow"
     MinWidth="400"
     MinHeight="150"
-	Width="800"
-    Height="500"
+	Width="1000"
+    Height="800"
 	Loaded="MainWindow_Loaded"
     FocusManager.FocusedElement="{Binding ElementName=networkControl}"
     >
@@ -57,8 +57,8 @@
             -->
             <DataTemplate DataType="{x:Type local:ConnectionBadIndicator}">
                 <Grid Width="80">
-                    
-                    <!--This Does not fucking work?--> 
+
+                    <!--This Does not fucking work?-->
                     <!--<ContentControl Style="{StaticResource CancelImage}"  Foreground="Red" />-->
                     <Image Width="32"
                            Height="32"
@@ -335,7 +335,7 @@
                                    Text="{Binding Name}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" />
-                        
+
                         <Button Grid.Column="3"
                                 Grid.Row="0"
                                 Margin="30 0 0 0"
@@ -345,7 +345,7 @@
                                 BorderThickness="0"
                                 Command="{StaticResource Commands.DeleteNode}"
                                 CommandParameter="{Binding}">
-                            
+
                             <Path Stroke="Red">
                                 <Path.Data>
                                     <PathGeometry>
@@ -705,25 +705,37 @@
                 Grid.Column="16"
                 />
 
-            <local:GraphNavigator  Height="200" Width="200"></local:GraphNavigator>
+            <!--<local:GraphNavigator  Height="200" Width="200"></local:GraphNavigator>-->
 
         </Grid>
-        <!-- 
+
+
+        <Grid>
+
+            <Grid Panel.ZIndex="10000" IsHitTestVisible="False" Background="Transparent">
+                <local:GraphNavigator Height="150" Width="150" Margin="25 0 0 25"
+                                      IsHitTestVisible="True"  
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Bottom" />
+            </Grid>
+
+            <!-- 
         The ScrollViewer displays scrollbars when the content is too big to fit in the viewport. 
         Focusable is set to False because it is only that NetworkView that I want to be focusable.
         -->
-        <ScrollViewer
+            <ScrollViewer
             CanContentScroll="True"
             VerticalScrollBarVisibility="Visible"
             HorizontalScrollBarVisibility="Visible"
             Focusable="False"
             >
 
-            <!-- 
+                <Grid>
+                    <!-- 
             The ZoomAndPanControl displays the NetworkView as its content.
             We can use the mouse to zoom and pan about the NetworkView.
             -->
-            <ZoomAndPan:ZoomAndPanControl
+                    <ZoomAndPan:ZoomAndPanControl
                 x:Name="zoomAndPanControl"
                 ContentScale="{Binding ContentScale, Mode=TwoWay}"
                 ContentOffsetX="{Binding ContentOffsetX, Mode=TwoWay}"
@@ -736,23 +748,28 @@
 
 
 
-                <!--
+                        <!--
                 We need to nest our NetworkView in an AdornerDecorator so that adorners work correct when
                 we zoom in and out using the ZoomAndPanControl
                 -->
-                <AdornerDecorator>
-                    <!--
+                        <AdornerDecorator>
+
+
+                            <!--
                     This grid specifies the size of the ZoomAndPanControl's content.
                     It wraps up both the NetworkView and drag-zooming Canvas.
                     -->
-                    <Grid
+
+
+                            <Grid
                         Width="{Binding ContentWidth}"
                         Height="{Binding ContentHeight}"
                         >
 
-                        <!-- In this sample the NetworkView is the content displayed by the ZoomAndPanControl. -->
 
-                        <NetworkUI:NetworkView
+                                <!-- In this sample the NetworkView is the content displayed by the ZoomAndPanControl. -->
+
+                                <NetworkUI:NetworkView
                             x:Name="networkControl"
                             
                             NodesSource="{Binding Network.Nodes}"
@@ -769,28 +786,32 @@
                             MouseWheel="networkControl_MouseWheel"
                             />
 
-                        <!--
+                                <!--
                         This Canvas and Border are used as a very simple way to render a drag rectangle that the user
                         uses to specify an area to zoom in on.
                         -->
-                        <Canvas
+                                <Canvas
                             x:Name="dragZoomCanvas"
                             Visibility="Collapsed"
                             >
-                            <Border 
+                                    <Border 
                                 x:Name="dragZoomBorder"
-                                BorderBrush="Black"
+                                BorderBrush="Red"
                                 BorderThickness="1"
                                 Background="Silver"
                                 CornerRadius="1"
                                 Opacity="0"
                                 />
-                        </Canvas>
-                    </Grid>
-                </AdornerDecorator>
+                                </Canvas>
 
 
-            </ZoomAndPan:ZoomAndPanControl>
-        </ScrollViewer>
+                            </Grid>
+                        </AdornerDecorator>
+
+
+                    </ZoomAndPan:ZoomAndPanControl>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </DockPanel>
 </Window>
