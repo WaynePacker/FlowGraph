@@ -8,119 +8,39 @@
     Include this in binding statements for diagnostics:
     diagnostics:PresentationTraceSources.TraceLevel=High
     -->
-    
-    <SolidColorBrush
-        x:Key="selectionBorderColor"
-        Color="Blue"
-        />
-    
-    <SolidColorBrush
-        x:Key="selectionBorderBackgroundColor"
-        Color="Blue"
-        Opacity="0.25"
-        />
+
+    <SolidColorBrush x:Key="selectionBorderColor" Color="Blue" />
+    <SolidColorBrush x:Key="selectionBorderBackgroundColor" Color="Blue" Opacity="0.25" />
 
     <!-- Default style and control-template for 'NodeItem'. -->
-    <Style 
-        TargetType="{x:Type local:NodeItem}"
-        >
-        
+    <Style TargetType="{x:Type local:NodeItem}" >
+  
         <!-- Data-bind the parent NetworkView. -->
-        <Setter
-            Property="ParentNetworkView"
-            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"
-            />
+        <Setter Property="ParentNetworkView"
+            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}" />
         
         <!-- Set the position of the node within the canvas. -->
-        <Setter
-            Property="Canvas.Left"
-            Value="{Binding X, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-            />
-        <Setter
-            Property="Canvas.Top"
-            Value="{Binding Y, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-            />
+        <Setter Property="Canvas.Left"
+            Value="{Binding X, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
+        <Setter Property="Canvas.Top"
+            Value="{Binding Y, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
         
         <!-- Set the z-order of the node within the canvas. -->
-        <Setter
-            Property="Canvas.ZIndex"
-            Value="{Binding ZIndex, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-            />
+        <Setter Property="Canvas.ZIndex"
+            Value="{Binding ZIndex, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
 
         <!-- Set defaults for background and border. -->
-        <Setter 
-            Property="Background" 
-            Value="Transparent" 
-            />
-        <Setter 
-            Property="BorderBrush" 
-            Value="Transparent" 
-            />
-        <Setter 
-            Property="BorderThickness" 
-            Value="1" 
-            />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
 
         <!-- The control-template for the node. -->
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate 
-                    TargetType="{x:Type local:NodeItem}"
-                    >
+                <ControlTemplate TargetType="{x:Type local:NodeItem}" >
                     <Grid>
-                        
-                        <!-- 
-                        This border indicates that node is selected.
-                        Normally it is transparent, but when 'IsSelected' is set
-                        to 'true' the border brush becomes blue and its background
-                        becomds light blue.
-                        -->
-                        <Border
-                            x:Name="selectionBorder"
-                            Background="{TemplateBinding Background}" 
-                            BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Margin="{TemplateBinding Margin}"
-                            Padding="{TemplateBinding Padding}"
-                            CornerRadius="2"
-                            >
-                            
-                            <!-- 
-                            User-defined node content is presented here. 
-                            -->
-                            <ContentPresenter />
-                           
-                        </Border>
-                        
+                        <ContentPresenter x:Name="node" />
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        
-                        <Trigger 
-                            Property="IsSelected"
-                            Value="True"
-                            >
-                            
-                            <!-- When the node is selected, set the color of 'selectionBorder' to blue. -->
-                            <Setter
-                                TargetName="selectionBorder"
-                                Property="BorderBrush"
-                                Value="{StaticResource selectionBorderColor}"
-                                />                                
-                        </Trigger>
-                        
-                        <Trigger 
-                            Property="IsSelected"
-                            Value="True"
-                            >
-                            
-                            <!-- When the node is selected, set the background of 'selectionBorder' to light blue. -->
-                            <Setter
-                                TargetName="selectionBorder"
-                                Property="Background"
-                                Value="{StaticResource selectionBorderBackgroundColor}"
-                                />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -130,23 +50,17 @@
     <Style TargetType="{x:Type local:ConnectorItem}">
         
         <!-- Data-bind the parent NetworkView. -->
-        <Setter
-            Property="ParentNetworkView"
-            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"
-            />
+        <Setter Property="ParentNetworkView"
+            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}" />
         
         <!-- Data-bind the parent NodeItem. -->
-        <Setter
-            Property="ParentNodeItem"
-            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NodeItem}}, Path=.}"
-            />
+        <Setter Property="ParentNodeItem"
+                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NodeItem}}, Path=.}" />
 
         <!-- The control-template for the connector. -->
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate 
-                    TargetType="{x:Type local:ConnectorItem}"
-                    >
+                <ControlTemplate TargetType="{x:Type local:ConnectorItem}" >
                     
                     <!-- Application-defined connector content is presented here. -->
                     <ContentPresenter />
@@ -169,9 +83,7 @@
                     'IsItemsHost' is set to 'True' so that the ListBox
                     uses the Canvas as the container for its items.
                     -->
-                    <Canvas 
-                        IsItemsHost="True" 
-                        />
+                    <Canvas IsItemsHost="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

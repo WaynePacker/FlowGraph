@@ -12,10 +12,8 @@
 
     <!-- The border brush for nodes. -->
     <SolidColorBrush x:Key="nodeBorderBrush"  Color="#6a8ca5" />
-    <!-- Delete this border brush, nodes should not have borders -->
     <SolidColorBrush x:Key="nodeFillBrush" Color="#81aece" />
     <SolidColorBrush x:Key="selectedNodeBorderBrush" Color="#c7a130" />
-    <!-- Delete this border brush, nodes should not have borders -->
     <SolidColorBrush x:Key="selectedNodeFillBrush" Color="#fcc935" />
     <SolidColorBrush x:Key="networkCanvasBrush" Color="#232323" />
 
@@ -53,6 +51,12 @@
         <Setter Property="Y" Value="{Binding Y}" />
         <Setter Property="ZIndex" Value="{Binding ZIndex}" />
         <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource selectedNodeFillBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource selectedNodeBorderBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- 

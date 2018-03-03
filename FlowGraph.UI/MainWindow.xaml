@@ -83,8 +83,7 @@
             <!-- 
             Define the visual style for a 'ConnectorItem'.
             -->
-            <Style 
-                TargetType="{x:Type NetworkUI:ConnectorItem}"
+            <Style TargetType="{x:Type NetworkUI:ConnectorItem}"
                 >
                 <!-- 
                 Data-binding for the connector hotspot.
@@ -92,15 +91,11 @@
                 to the 'Hotspot' property.  This data-binding then 'pushes' the value into the application
                 view-model.
                 -->
-                <Setter 
-                    Property="Hotspot"
-                    Value="{Binding Hotspot, Mode=OneWayToSource}"
-                    />
+                <Setter Property="Hotspot"
+                    Value="{Binding Hotspot, Mode=OneWayToSource}" />
 
                 <!-- The visual template. -->
-                <Setter 
-                    Property="Template"
-                    >
+                <Setter Property="Template" >
                     <Setter.Value>
                         <ControlTemplate 
                             TargetType="{x:Type NetworkUI:ConnectorItem}"
@@ -119,8 +114,7 @@
             Template for the button that is used to delete nodes and connections in the graph.
             This button is displayed in an adorner when the user hovers the mouse over a node or connection.
             -->
-            <ControlTemplate 
-                x:Key="deleteButtonTemplate"
+            <ControlTemplate x:Key="deleteButtonTemplate"
                 TargetType="{x:Type Button}"
                 >
                 <Grid
@@ -160,9 +154,7 @@
                         />
                 </Grid>
                 <ControlTemplate.Triggers>
-                    <EventTrigger
-                        RoutedEvent="Mouse.MouseEnter"
-                        >
+                    <EventTrigger RoutedEvent="Mouse.MouseEnter" >
                         <!-- 
                         Make the 'delete connection button' larger when the mouse 
                         cursor is hovered over it.
@@ -185,9 +177,7 @@
                         </BeginStoryboard>
                     </EventTrigger>
 
-                    <EventTrigger
-                        RoutedEvent="Mouse.MouseLeave"
-                        >
+                    <EventTrigger RoutedEvent="Mouse.MouseLeave" >
                         <!-- 
                         Return the 'delete connection button' to normal size when the mouse
                         cursor is moved away.
@@ -281,33 +271,16 @@
             </DataTemplate>
 
             <!-- Define a data-template for the 'NodeViewModel' class. -->
-            <DataTemplate
-                DataType="{x:Type NetworkModel:NodeViewModel}"
-                >
-
-                <!-- 
-                An adorned control is used, to represent the node. 
-                When the user hovers the mouse cursor over the node, the 
-                'delete node' adorner pops up and allows them to delete the node.
-                -->
-                <!--<ac:AdornedControl
-                    HorizontalAdornerPlacement="Outside"
-                    VerticalAdornerPlacement="Outside"
-                    AdornerOffsetX="-12"
-                    AdornerOffsetY="8"
-                    IsMouseOverShowEnabled="{Binding ElementName=networkControl, Path=IsNotDragging}"
-                    >-->
-
+            <DataTemplate DataType="{x:Type NetworkModel:NodeViewModel}" >
                 <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->
 
-                <Grid
-                        MinWidth="120"
-                        Margin="10 6"
-                        SizeChanged="Node_SizeChanged"
-                        >
+                <Grid MinWidth="120"
+                      Margin="10 6"
+                      SizeChanged="Node_SizeChanged" >
                     <!-- This rectangle is the main visual for the node. -->
 
-                    <Rectangle Stroke="{StaticResource nodeBorderBrush}"
+                    <Rectangle x:Name="node"
+                                Stroke="{StaticResource nodeBorderBrush}"
                                 StrokeThickness="1"
                                 Fill="{StaticResource nodeFillBrush}" />
 
@@ -380,44 +353,15 @@
                     </Grid>
                 </Grid>
 
-                <!--<ac:AdornedControl.AdornerContent>
-                        
-                        -->
-                <!-- 
-                        This is the adorner that pops up when the user hovers the mouse over the node.
-                        It displays a button that the user can click to delete the node.
-                        -->
-                <!--
-                        <Canvas
-                            x:Name="nodeAdornerCanvas"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Width="30"
-                            Height="30"
-                            >
-                            <Line
-                                X1="0"
-                                Y1="30"
-                                X2="15"
-                                Y2="15"
-                                Stroke="Black"
-                                StrokeThickness="1"
-                                />
-                            <Button
-                                x:Name="deleteNodeButton"
-                                Canvas.Left="10"
-                                Canvas.Top="0"
-                                Width="20"
-                                Height="20"
-                                Cursor="Hand"
-                                Focusable="False"
-                                Command="{StaticResource Commands.DeleteNode}"
-                                CommandParameter="{Binding}"
-                                Template="{StaticResource deleteButtonTemplate}"
-                                />
-                        </Canvas>                        
-                    </ac:AdornedControl.AdornerContent>
-                </ac:AdornedControl>-->
+
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                        <Setter TargetName="node" Property="Stroke" Value="{StaticResource selectedNodeBorderBrush}"/>
+                        <Setter TargetName="node" Property="Fill" Value="{StaticResource selectedNodeFillBrush}"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+
+
             </DataTemplate>
 
         </ResourceDictionary>
