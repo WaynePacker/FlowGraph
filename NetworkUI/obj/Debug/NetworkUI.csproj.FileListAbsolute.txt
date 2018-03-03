@@ -36,3 +36,16 @@ F:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkUI\obj\Debug\NetworkUI.
 F:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkUI\obj\Debug\NetworkUI.csproj.CoreCompileInputs.cache
 F:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkUI\obj\Debug\NetworkUI.dll
 F:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkUI\obj\Debug\NetworkUI.pdb
+F:\Documents\GitHub\FlowGraph\NetworkUI\bin\Debug\NetworkUI.dll
+F:\Documents\GitHub\FlowGraph\NetworkUI\bin\Debug\NetworkUI.pdb
+F:\Documents\GitHub\FlowGraph\NetworkUI\bin\Debug\Utils.dll
+F:\Documents\GitHub\FlowGraph\NetworkUI\bin\Debug\Utils.pdb
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI.csprojResolveAssemblyReference.cache
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI_MarkupCompile.cache
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI_MarkupCompile.lref
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\Themes\Generic.baml
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI.g.resources
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI.csproj.CoreCompileInputs.cache
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI.dll
+F:\Documents\GitHub\FlowGraph\NetworkUI\obj\Debug\NetworkUI.pdb

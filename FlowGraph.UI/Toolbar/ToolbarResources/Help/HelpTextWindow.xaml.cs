@@ -1,10 +1,7 @@
 ﻿using System.Windows;
 
-namespace FlowGraph.UI
+namespace FlowGraph.UI.Toolbar.ToolbarResources.Help
 {
-    /// <summary>
-    /// Interaction logic for HelpTextWindow.xaml
-    /// </summary>
     public partial class HelpTextWindow : Window
     {
         public HelpTextWindow()

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\Documents\CodeProject\c#\NetworkViewSampleCode\FlowGraph.UI\obj\Debug\
+F:\Documents\GitHub\FlowGraph\FlowGraph.UI\obj\Debug\
 FlowGraph.UI
 none
 false
 DEBUG;TRACE
-F:\Documents\CodeProject\c#\NetworkViewSampleCode\FlowGraph.UI\App.xaml
-7-586090349
+F:\Documents\GitHub\FlowGraph\FlowGraph.UI\App.xaml
+8-918579247
 
-20855743231
-17-569065919
-GraphNavigator.xaml;HelpText.xaml;HelpTextWindow.xaml;MainWindow.xaml;OverviewWindow.xaml;Resources\ImageResources.xaml;SharedVisualTemplates.xaml;
+22-1328591373
+17-184902525
+GraphNavigator.xaml;Toolbar\ToolbarResources\Help\HelpText.xaml;MainWindow.xaml;OverviewWindow.xaml;Resources\ImageResources.xaml;SharedVisualTemplates.xaml;Toolbar\Toolbar.xaml;Toolbar\ToolbarResources\Help\HelpTextWindow.xaml;
 
 False
 

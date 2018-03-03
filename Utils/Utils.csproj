@@ -82,6 +82,7 @@
     <Compile Include="AbstractModelBase.cs" />
     <Compile Include="AdornerPlacement.cs" />
     <Compile Include="CollectionItemsChangedEventArgs.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="FrameworkElementAdorner.cs" />
     <Compile Include="ImpObservableCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

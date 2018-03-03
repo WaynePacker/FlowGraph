@@ -5,6 +5,7 @@
     xmlns:NetworkModel="clr-namespace:FlowGraph.UI.NetworkModel"
     xmlns:NetworkUI="clr-namespace:NetworkUI;assembly=NetworkUI"
     xmlns:ZoomAndPan="clr-namespace:ZoomAndPan;assembly=ZoomAndPan"
+    xmlns:ToolBar="clr-namespace:FlowGraph.UI.Toolbar"
     xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
     xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     Title="Main Window" 
@@ -554,6 +555,9 @@
     </Window.DataContext>
 
     <DockPanel>
+
+        <ToolBar:Toolbar DockPanel.Dock="Top" />
+
         <!-- Grid placed below the zoom and pan control that contains the zoom slider, zoom label and some buttons. -->
         <Grid
             Margin="5,5,5,5"

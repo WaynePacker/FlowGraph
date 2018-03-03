@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 F:\Documents\GitHub\FlowGraph\FlowGraph.UI\App.xaml
-7-586090349
+8-918579247
 
-24-1433438192
+26677194500
 17-184902525
-GraphNavigator.xaml;HelpText.xaml;HelpTextWindow.xaml;MainWindow.xaml;OverviewWindow.xaml;Resources\ImageResources.xaml;SharedVisualTemplates.xaml;
+GraphNavigator.xaml;Toolbar\ToolbarResources\Help\HelpText.xaml;MainWindow.xaml;OverviewWindow.xaml;Resources\ImageResources.xaml;SharedVisualTemplates.xaml;Toolbar\Toolbar.xaml;Toolbar\ToolbarResources\Help\HelpTextWindow.xaml;
 
-True
+False
 

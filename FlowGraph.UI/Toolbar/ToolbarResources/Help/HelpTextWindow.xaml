@@ -1,0 +1,21 @@
+﻿<Window x:Class="FlowGraph.UI.Toolbar.ToolbarResources.Help.HelpTextWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Read me!" 
+        Height="500" 
+        Width="600"
+        WindowStyle="ToolWindow"
+        ShowInTaskbar="False" 
+        ShowActivated="False">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="HelpText.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <FlowDocumentPageViewer Document="{StaticResource helpText}" />
+    
+</Window>

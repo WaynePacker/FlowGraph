@@ -150,8 +150,7 @@
         <List>
             <ListItem>
                 <Paragraph>
-                    The overview window which is underneath the main window has also been 
-                    carried across from my previous article about the ZoomAndPanControl.
+                    There is a overview window underneath the main window.
                 </Paragraph>
             </ListItem>
             <ListItem>
