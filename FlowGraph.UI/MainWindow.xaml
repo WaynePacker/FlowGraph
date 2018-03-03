@@ -237,7 +237,7 @@
                     <!-- The connection is represented by a curved arrow. -->
                     <local:CurvedArrow
                         Stroke="{StaticResource connectionBrush}"
-                        StrokeThickness="2"
+                        StrokeThickness="1"
                         Fill="{StaticResource connectionBrush}"
                         Points="{Binding Points}"
                         />
@@ -309,7 +309,7 @@
 
                     <Rectangle Stroke="{StaticResource nodeBorderBrush}"
                                 StrokeThickness="1"
-                                Fill="Orange" />
+                                Fill="{StaticResource nodeFillBrush}" />
 
                     <!-- 
                         This grid contains the node's connectors.
@@ -774,7 +774,9 @@
                             
                             NodesSource="{Binding Network.Nodes}"
                             ConnectionsSource="{Binding Path=Network.Connections}"
-                            
+                                    
+                            Background="{StaticResource networkCanvasBrush}"
+                                    
                             ConnectionDragStarted="networkControl_ConnectionDragStarted"
                             QueryConnectionFeedback="networkControl_QueryConnectionFeedback"
                             ConnectionDragging="networkControl_ConnectionDragging"                            

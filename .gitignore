@@ -46,6 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#Bin folder
-./FlowGraph.UI/bin
+# Meh meh meh
+*/FlowGraph.UI/bin
+*/FlowGraph.UI/obj
+*.vs
 

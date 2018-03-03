@@ -181,7 +181,7 @@
     <Style 
         TargetType="{x:Type local:NetworkView}"
         >
-        
+
         <!-- The visual template. -->
         <Setter 
             Property="Template"
