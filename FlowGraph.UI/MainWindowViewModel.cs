@@ -1,6 +1,7 @@
 ﻿using FlowGraph.UI.NetworkModel;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using Utils;
 
@@ -226,13 +227,17 @@ namespace FlowGraph.UI
                 var sourceConnector = draggedOutConnector;
                 var destConnector = draggedOverConnector;
 
+                var validChildToParentType = sourceConnector.Type == ConnectorType.Child && destConnector.Type == ConnectorType.Parent;
+                var validOutputToInpuType = sourceConnector.Type == ConnectorType.Output && destConnector.Type == ConnectorType.Input;
+
+
                 //
                 // Only allow connections from output connector to input connector (ie each
                 // connector must have a different type).
                 // Also only allocation from one node to another, never one node back to the same node.
                 //
                 connectionOk = sourceConnector.ParentNode != destConnector.ParentNode &&
-                                 sourceConnector.Type != destConnector.Type;
+                                 (validChildToParentType || validOutputToInpuType);
 
                 if (connectionOk)
                 {
@@ -285,13 +290,16 @@ namespace FlowGraph.UI
                 return;
             }
 
+
+            var validChildToParentType = connectorDraggedOut.Type == ConnectorType.Child && connectorDraggedOver.Type == ConnectorType.Parent;
+            var validOutputToInpuType = connectorDraggedOut.Type == ConnectorType.Output && connectorDraggedOver.Type == ConnectorType.Input;
             //
             // Only allow connections from output connector to input connector (ie each
             // connector must have a different type).
             // Also only allocation from one node to another, never one node back to the same node.
             //
             bool connectionOk = connectorDraggedOut.ParentNode != connectorDraggedOver.ParentNode &&
-                                connectorDraggedOut.Type != connectorDraggedOver.Type;
+                             (validChildToParentType || validOutputToInpuType);
 
             if (!connectionOk)
             {
@@ -308,14 +316,35 @@ namespace FlowGraph.UI
             // The user has dragged the connection on top of another valid connector.
             //
 
-            //
-            // Remove any existing connection between the same two connectors.
-            //
-            var existingConnection = FindConnection(connectorDraggedOut, connectorDraggedOver);
-            if (existingConnection != null)
+
+            //Only one parent- child connection is allowed
+            if(validChildToParentType)
             {
-                this.Network.Connections.Remove(existingConnection);
+                var sourceConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOut : connectorDraggedOver;
+                var destConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOver : connectorDraggedOut;
+
+                var sourceChildConnector = sourceConnector.ParentNode.ChildNodeConnection;
+                
+                if (sourceChildConnector.IsConnected)
+                {
+                    var existingConnection = sourceChildConnector.AttachedConnections.Single(c => c.DestConnector != null);
+                    this.Network.Connections.Remove(existingConnection);
+                }
+                
             }
+            else
+            {
+                //
+                // Remove any existing connection between the same two connectors.
+                //
+                var existingConnection = FindConnection(connectorDraggedOut, connectorDraggedOver);
+                if (existingConnection != null)
+                {
+                    this.Network.Connections.Remove(existingConnection);
+                }
+            }
+
+           
 
             //
             // Finalize the connection by attaching it to the connector

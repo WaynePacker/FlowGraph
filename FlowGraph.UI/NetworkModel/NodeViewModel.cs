@@ -79,7 +79,7 @@ namespace FlowGraph.UI.NetworkModel
             ParentNodeConnection = new ConnectorViewModel("Parent");
             ChildNodeConnection = new ConnectorViewModel("Child");
 
-            ParentNodeConnection.ParentNode = null;
+            ParentNodeConnection.ParentNode = this;
             ParentNodeConnection.Type = ConnectorType.Parent;
 
             ChildNodeConnection.ParentNode = this;
