@@ -7,4 +7,4 @@ This code was originally from a [tutorial on CodeProject](https://www.codeprojec
 
 ## Running the application
 
-To start, set Flow.UI as the startup project in Visual Studio and that's it.
+To start, set FlowGraph.UI as the startup project in Visual Studio and that's it.
