@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:FlowGraph.Resources">
 
     
-    <Style TargetType="ContentControl" x:Key="CancelImage">
+    <!--<Style TargetType="ContentControl" x:Key="CancelImage">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
@@ -21,7 +21,71 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>-->
+
+    <Style TargetType="ContentControl" x:Key="CancelImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Width="17" Height="17">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0"/>
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Canvas>
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </Canvas.RenderTransform>
+                                <Canvas>
+                                    <Canvas.RenderTransform>
+                                        <RotateTransform Angle="45"/>
+                                    </Canvas.RenderTransform>
+                                    <Ellipse Canvas.Left="1" Canvas.Top="0.9" Width="15" Height="15" StrokeThickness="1.91373122" Stroke="{TemplateBinding Foreground}" StrokeMiterLimit="4" StrokeLineJoin="Miter" Opacity="1"/>
+                                    <Path StrokeThickness="1.91373122" Stroke="{TemplateBinding Foreground}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                                        <Path.Data>
+                                            <PathGeometry Figures="M 8.5098772 1.0628502 V 15.851168" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-    
+
+    <Style TargetType="ContentControl" x:Key="CheckImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Width="17" Height="17">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0"/>
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Canvas>
+                                <Path StrokeThickness="2.63051343" Stroke="{TemplateBinding Foreground}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 15.648544 2.72202 -1.451676 1.45167 -8.9277326 8.92773 -3.741098 -3.74109" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+   
+
+
+
+
+
+
 
 </ResourceDictionary>

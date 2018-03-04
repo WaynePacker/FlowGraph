@@ -57,13 +57,11 @@
             -->
             <DataTemplate DataType="{x:Type local:ConnectionBadIndicator}">
                 <Grid Width="80">
-
-                    <!--This Does not fucking work?-->
-                    <!--<ContentControl Style="{StaticResource CancelImage}"  Foreground="Red" />-->
-                    <Image Width="32"
-                           Height="32"
-                           Source="Resources/block_16.png"
-                           HorizontalAlignment="Right" />
+                    <ContentControl Height="26" 
+                                    Width="26" 
+                                    Style="{StaticResource CancelImage}"  
+                                    Foreground="Red"
+                                    HorizontalAlignment="Right"/>
                 </Grid>
             </DataTemplate>
 
@@ -72,11 +70,11 @@
             -->
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid Width="80">
-                    <Image Width="32"
-                        Height="32"
-                        Source="Resources/tick_16.png"
-                        HorizontalAlignment="Right"
-                        />
+                    <ContentControl Height="26" 
+                                    Width="26" 
+                                    Style="{StaticResource CheckImage}"  
+                                    Foreground="Green"
+                                    HorizontalAlignment="Right"/>
                 </Grid>
             </DataTemplate>
 
