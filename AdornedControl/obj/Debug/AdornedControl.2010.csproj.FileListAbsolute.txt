@@ -1,7 +1,0 @@
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\AdornedControl.dll
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\AdornedControl.pdb
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\Utils.dll
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\bin\Debug\Utils.pdb
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.2010.csprojResolveAssemblyReference.cache
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.dll
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\AdornedControl\obj\Debug\AdornedControl.pdb

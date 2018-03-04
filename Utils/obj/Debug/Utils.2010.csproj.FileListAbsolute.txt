@@ -1,4 +1,0 @@
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\Utils\bin\Debug\Utils.dll
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\Utils\bin\Debug\Utils.pdb
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\Utils\obj\Debug\Utils.dll
-D:\Documents\CodeProject\c#\NetworkViewSampleCode\NetworkViewSampleCode\Utils\obj\Debug\Utils.pdb
