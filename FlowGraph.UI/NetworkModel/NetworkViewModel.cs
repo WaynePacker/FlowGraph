@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using Utils;
 
 namespace FlowGraph.UI.NetworkModel
@@ -53,7 +48,7 @@ namespace FlowGraph.UI.NetworkModel
                 if (connections == null)
                 {
                     connections = new ImpObservableCollection<ConnectionViewModel>();
-                    connections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(connections_ItemsRemoved);
+                    connections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(Connections_ItemsRemoved);
                 }
 
                 return connections;
@@ -65,7 +60,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised then Connections have been removed.
         /// </summary>
-        private void connections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void Connections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectionViewModel connection in e.Items)
             {

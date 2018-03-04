@@ -23,21 +23,6 @@
     <!-- The brush for connectors. -->
     <SolidColorBrush x:Key="connectorBackgroundBrush" Color="White"/>
 
-
-    <!-- The fill brush for nodes. -->
-    <!--<LinearGradientBrush
-        x:Key="nodeFillBrush"
-        StartPoint="0,0"
-        EndPoint="0,1"
-        >
-        <GradientStop Color="White" Offset="0" />
-        <GradientStop Color="#7FC9FF" Offset="0.6" />
-    </LinearGradientBrush>-->
-
-
-
-
-
     <!--
     Define a style for 'NodeItem'.
     

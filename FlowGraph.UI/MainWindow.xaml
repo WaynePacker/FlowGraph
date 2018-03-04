@@ -225,8 +225,7 @@
                         Stroke="{StaticResource connectionBrush}"
                         StrokeThickness="1"
                         Fill="{StaticResource connectionBrush}"
-                        Points="{Binding Points}"
-                        />
+                        Points="{Binding Points}" />
 
                     <ac:AdornedControl.AdornerContent>
 

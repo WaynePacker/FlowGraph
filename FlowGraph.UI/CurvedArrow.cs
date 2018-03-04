@@ -14,11 +14,11 @@ namespace FlowGraph.UI
 
         public static readonly DependencyProperty ArrowHeadLengthProperty =
             DependencyProperty.Register("ArrowHeadLength", typeof(double), typeof(CurvedArrow),
-                new FrameworkPropertyMetadata(20.0, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty ArrowHeadWidthProperty =
             DependencyProperty.Register("ArrowHeadWidth", typeof(double), typeof(CurvedArrow),
-                new FrameworkPropertyMetadata(12.0, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty PointsProperty =
             DependencyProperty.Register("Points", typeof(PointCollection), typeof(CurvedArrow),

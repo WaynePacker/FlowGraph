@@ -74,7 +74,8 @@ namespace FlowGraph.UI.NetworkModel
 
         #endregion Private Data Members
 
-        public NodeViewModel() {
+        public NodeViewModel()
+        {
 
             ParentNodeConnection = new ConnectorViewModel("Parent");
             ChildNodeConnection = new ConnectorViewModel("Child");
@@ -86,7 +87,7 @@ namespace FlowGraph.UI.NetworkModel
             ChildNodeConnection.Type = ConnectorType.Child;
         }
 
-        public NodeViewModel(string name): this()
+        public NodeViewModel(string name) : this()
         {
             this.name = name;
         }
@@ -221,7 +222,7 @@ namespace FlowGraph.UI.NetworkModel
                 if (!isRootNode)
                     attachedConnections.AddRange(ParentNodeConnection.AttachedConnections);
 
-                if(!isBranch)
+                if (!isBranch)
                     attachedConnections.AddRange(ChildNodeConnection.AttachedConnections);
 
                 return attachedConnections;
@@ -237,7 +238,7 @@ namespace FlowGraph.UI.NetworkModel
             set { SetAndNotify(ref isSelected, value); }
         }
 
-    
+
 
         public ConnectorViewModel ParentNodeConnection
         {
