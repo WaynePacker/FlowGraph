@@ -47,7 +47,7 @@ Temporary Items
 .apdisk
 
 # Meh meh meh
-*/FlowGraph.UI/bin
-*/FlowGraph.UI/obj
+bin/
+obj/
 *.vs
 
