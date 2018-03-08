@@ -38,12 +38,12 @@ namespace FlowGraph.UI
         ///
         /// The width of the content (in content coordinates).
         /// 
-        private double contentWidth = 1000;
+        private double contentWidth = 1600;
 
         ///
         /// The heigth of the content (in content coordinates).
         /// 
-        private double contentHeight = 1000;
+        private double contentHeight = 900;
 
         ///
         /// The width of the viewport onto the content (in content coordinates).

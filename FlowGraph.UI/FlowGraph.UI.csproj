@@ -212,12 +212,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\block_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\tick_16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\scissors.png" />
   </ItemGroup>
   <ItemGroup>

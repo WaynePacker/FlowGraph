@@ -12,9 +12,10 @@
     x:Name="mainWindow"
     MinWidth="400"
     MinHeight="150"
-	Width="1000"
-    Height="800"
+	Width="{Binding contentWidth}"
+    Height="{Binding contentHeight}"
 	Loaded="MainWindow_Loaded"
+    WindowStartupLocation="CenterScreen"
     FocusManager.FocusedElement="{Binding ElementName=networkControl}"
     >
 
@@ -81,23 +82,19 @@
             <!-- 
             Define the visual style for a 'ConnectorItem'.
             -->
-            <Style TargetType="{x:Type NetworkUI:ConnectorItem}"
-                >
+            <Style TargetType="{x:Type NetworkUI:ConnectorItem}" >
                 <!-- 
                 Data-binding for the connector hotspot.
                 ConnectorItem automatically computes its center points and assings this value
                 to the 'Hotspot' property.  This data-binding then 'pushes' the value into the application
                 view-model.
                 -->
-                <Setter Property="Hotspot"
-                    Value="{Binding Hotspot, Mode=OneWayToSource}" />
+                <Setter Property="Hotspot" Value="{Binding Hotspot, Mode=OneWayToSource}" />
 
                 <!-- The visual template. -->
                 <Setter Property="Template" >
                     <Setter.Value>
-                        <ControlTemplate 
-                            TargetType="{x:Type NetworkUI:ConnectorItem}"
-                            >
+                        <ControlTemplate TargetType="{x:Type NetworkUI:ConnectorItem}" >
                             <!-- The visual for the connector. -->
                             <Ellipse
                                 Stroke="{StaticResource nodeBorderBrush}"
@@ -266,7 +263,7 @@
             </DataTemplate>
 
             <!-- Define a data-template for the 'NodeViewModel' class. -->
-            <DataTemplate DataType="{x:Type NetworkModel:NodeViewModel}" >
+            <DataTemplate x:Name="NodeControl" DataType="{x:Type NetworkModel:NodeViewModel}" >
                 <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->
 
                 <Grid MinWidth="120"
@@ -277,7 +274,17 @@
                     <Rectangle x:Name="node"
                                 Stroke="{StaticResource nodeBorderBrush}"
                                 StrokeThickness="1"
-                                Fill="{StaticResource nodeFillBrush}" />
+                                Fill="{StaticResource nodeFillBrush}" >
+                        <Rectangle.ContextMenu>
+                            <ContextMenu>
+                                <Menu>
+                                    <MenuItem Header="Delete"   
+                                          Command="{StaticResource Commands.DeleteNode}"
+                                          CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Menu>
+                            </ContextMenu>
+                        </Rectangle.ContextMenu>
+                    </Rectangle>
 
                     <!-- 
                         This grid contains the node's connectors.
@@ -333,7 +340,6 @@
                                    Focusable="True"
                                    Cursor="Hand"/>
 
-
                         <!--Parent Connector : Wrap in stack panel for correct cursor-->
 
                         <StackPanel Grid.Column="0" Grid.Row="1" Cursor="Hand">
@@ -351,19 +357,6 @@
                                                  Height="15"
                                                  HorizontalAlignment="Right" />
                         </StackPanel>
-
-                        <!--<NetworkUI:ConnectorItem Grid.Column="0"
-                                                 Grid.Row="1" 
-                                                 Width="15"
-                                                 Height="15"
-                                                 HorizontalAlignment="Left"/>-->
-                        <!--Child Connector-->
-                        <!--<NetworkUI:ConnectorItem Grid.Column="2"
-                                                 Grid.Row="1" 
-                                                 Width="15"
-                                                 Height="15"
-                                                 Cursor="Hand"
-                                                 HorizontalAlignment="Right"/>-->
 
                         <!-- Displays the node's input connectors. -->
                         <ItemsControl Grid.Column="0"
