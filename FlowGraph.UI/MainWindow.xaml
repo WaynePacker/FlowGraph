@@ -470,11 +470,11 @@
 
             <!-- Clicking this menu item creates a new node. -->
 
-            <MenuItem
-                Header="Create Node"
-                Command="{StaticResource Commands.CreateNode}"
-                ToolTip="Creates a new node"
-                />
+            <MenuItem Header="Add Nodes">
+                <MenuItem Header="Standard Node"
+                          Command="{StaticResource Commands.CreateNode}"
+                          ToolTip="Creates a new standard node"/>
+            </MenuItem>
 
             <Separator />
 
@@ -511,7 +511,7 @@
                     Command="{StaticResource Commands.ZoomOut}"
                     ToolTip="Zooms in on the canvas"
                     />
-
+            
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -742,10 +742,10 @@
                                     
                             Background="{StaticResource networkCanvasBrush}"
                                     
-                            ConnectionDragStarted="networkControl_ConnectionDragStarted"
+                            ConnectionDragStarted="NetworkControl_ConnectionDragStarted"
                             QueryConnectionFeedback="networkControl_QueryConnectionFeedback"
-                            ConnectionDragging="networkControl_ConnectionDragging"                            
-                            ConnectionDragCompleted="networkControl_ConnectionDragCompleted"
+                            ConnectionDragging="NetworkControl_ConnectionDragging"                            
+                            ConnectionDragCompleted="NetworkControl_ConnectionDragCompleted"
                             
                             MouseDown="networkControl_MouseDown"
                             MouseUp="networkControl_MouseUp"

@@ -187,13 +187,11 @@ namespace FlowGraph.UI
                     break;
                 case ConnectorType.Child:
                     {
-                        {
-                            //
-                            // The user is dragging out a child connector (an output) and will connect it to a parent connector (an input).
-                            //
-                            connection.SourceConnector = draggedOutConnector;
-                            connection.DestConnectorHotspot = curDragPoint;
-                        }
+                        //
+                        // The user is dragging out a child connector (an output) and will connect it to a parent connector (an input).
+                        //
+                        connection.SourceConnector = draggedOutConnector;
+                        connection.DestConnectorHotspot = curDragPoint;
                     }
                     break;
                 default:
@@ -318,19 +316,19 @@ namespace FlowGraph.UI
 
 
             //Only one parent- child connection is allowed
-            if(validChildToParentType)
+            if (validChildToParentType)
             {
                 var sourceConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOut : connectorDraggedOver;
                 var destConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOver : connectorDraggedOut;
 
                 var sourceChildConnector = sourceConnector.ParentNode.ChildNodeConnection;
-                
+
                 if (sourceChildConnector.IsConnected)
                 {
                     var existingConnection = sourceChildConnector.AttachedConnections.Single(c => c.DestConnector != null);
                     this.Network.Connections.Remove(existingConnection);
                 }
-                
+
             }
             else
             {
@@ -344,7 +342,7 @@ namespace FlowGraph.UI
                 }
             }
 
-           
+
 
             //
             // Finalize the connection by attaching it to the connector
@@ -454,7 +452,7 @@ namespace FlowGraph.UI
                 //
                 EventHandler<EventArgs> sizeChangedEventHandler = null;
                 sizeChangedEventHandler =
-                    delegate(object sender, EventArgs e)
+                    delegate (object sender, EventArgs e)
                     {
                         //
                         // This event handler will be called after the size of the node has been determined.
@@ -491,7 +489,7 @@ namespace FlowGraph.UI
         public void DeleteConnection(ConnectionViewModel connection)
         {
             this.Network.Connections.Remove(connection);
-            }
+        }
 
 
         #region Private Methods

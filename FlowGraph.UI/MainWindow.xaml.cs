@@ -31,20 +31,13 @@ namespace FlowGraph.UI
         /// </summary>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //
-            // Display help text for the sample app.
-            //
-            //HelpTextWindow helpTextWindow = new HelpTextWindow();
-            //helpTextWindow.Left = this.Left + this.Width + 5;
-            //helpTextWindow.Top = this.Top;
-            //helpTextWindow.Owner = this;
-            //helpTextWindow.Show();
+
         }
 
         /// <summary>
         /// Event raised when the user has started to drag out a connection.
         /// </summary>
-        private void networkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
+        private void NetworkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
         {
             var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
 
@@ -90,7 +83,7 @@ namespace FlowGraph.UI
         /// <summary>
         /// Event raised while the user is dragging a connection.
         /// </summary>
-        private void networkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
+        private void NetworkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
         {
             Point curDragPoint = Mouse.GetPosition(networkControl);
             var connection = (ConnectionViewModel)e.Connection;
@@ -100,7 +93,7 @@ namespace FlowGraph.UI
         /// <summary>
         /// Event raised when the user has finished dragging out a connection.
         /// </summary>
-        private void networkControl_ConnectionDragCompleted(object sender, ConnectionDragCompletedEventArgs e)
+        private void NetworkControl_ConnectionDragCompleted(object sender, ConnectionDragCompletedEventArgs e)
         {
             var connectorDraggedOut = (ConnectorViewModel)e.ConnectorDraggedOut;
             var connectorDraggedOver = (ConnectorViewModel)e.ConnectorDraggedOver;
