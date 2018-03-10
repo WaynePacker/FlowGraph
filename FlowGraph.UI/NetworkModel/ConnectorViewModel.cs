@@ -14,7 +14,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The connections that are attached to this connector, or null if no connections are attached.
         /// </summary>
-        private ImpObservableCollection<ConnectionViewModel> attachedConnections = null;
+        private ImpObservableCollection<AConnectionViewModel> attachedConnections = null;
 
         /// <summary>
         /// The hotspot (or center) of the connector.
@@ -83,15 +83,15 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The connections that are attached to this connector, or null if no connections are attached.
         /// </summary>
-        public ImpObservableCollection<ConnectionViewModel> AttachedConnections
+        public ImpObservableCollection<AConnectionViewModel> AttachedConnections
         {
             get
             {
                 if (attachedConnections == null)
                 {
-                    attachedConnections = new ImpObservableCollection<ConnectionViewModel>();
-                    attachedConnections.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(attachedConnections_ItemsAdded);
-                    attachedConnections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(attachedConnections_ItemsRemoved);
+                    attachedConnections = new ImpObservableCollection<AConnectionViewModel>();
+                    attachedConnections.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(AttachedConnections_ItemsAdded);
+                    attachedConnections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(AttachedConnections_ItemsRemoved);
                 }
 
                 return attachedConnections;
@@ -140,9 +140,9 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Debug checking to ensure that no connection is added to the list twice.
         /// </summary>
-        private void attachedConnections_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void AttachedConnections_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
-            foreach (ConnectionViewModel connection in e.Items)
+            foreach (AConnectionViewModel connection in e.Items)
             {
                 connection.ConnectionChanged += new EventHandler<EventArgs>(connection_ConnectionChanged);
             }
@@ -161,9 +161,9 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// Event raised when connections have been removed from the connector.
         /// </summary>
-        private void attachedConnections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void AttachedConnections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
-            foreach (ConnectionViewModel connection in e.Items)
+            foreach (AConnectionViewModel connection in e.Items)
             {
                 connection.ConnectionChanged -= new EventHandler<EventArgs>(connection_ConnectionChanged);
             }

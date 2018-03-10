@@ -94,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NetworkModel\Base\AConnectionViewModel.cs" />
     <Compile Include="Toolbar\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
@@ -160,7 +161,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindow_ZoomAndPan.cs" />
     <Compile Include="MouseHandlingMode.cs" />
-    <Compile Include="NetworkModel\ConnectionViewModel.cs" />
+    <Compile Include="NetworkModel\StandardConnectionViewModel.cs" />
     <Compile Include="NetworkModel\ConnectorType.cs" />
     <Compile Include="NetworkModel\ConnectorViewModel.cs" />
     <Compile Include="NetworkModel\NetworkViewModel.cs" />

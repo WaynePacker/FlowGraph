@@ -203,11 +203,11 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// A helper property that retrieves a list (a new list each time) of all connections attached to the node. 
         /// </summary>
-        public ICollection<ConnectionViewModel> AttachedConnections
+        public ICollection<AConnectionViewModel> AttachedConnections
         {
             get
             {
-                List<ConnectionViewModel> attachedConnections = new List<ConnectionViewModel>();
+                var attachedConnections = new List<AConnectionViewModel>();
 
                 foreach (var connector in this.InputConnectors)
                 {

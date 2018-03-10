@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Utils;
 
 namespace FlowGraph.UI.NetworkModel
@@ -18,7 +19,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The collection of connections in the network.
         /// </summary>
-        private ImpObservableCollection<ConnectionViewModel> connections = null;
+        private ImpObservableCollection<AConnectionViewModel> connections = null;
 
         #endregion Internal Data Members
 
@@ -41,13 +42,13 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The collection of connections in the network.
         /// </summary>
-        public ImpObservableCollection<ConnectionViewModel> Connections
+        public ImpObservableCollection<AConnectionViewModel> Connections
         {
             get
             {
                 if (connections == null)
                 {
-                    connections = new ImpObservableCollection<ConnectionViewModel>();
+                    connections = new ImpObservableCollection<AConnectionViewModel>();
                     connections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(Connections_ItemsRemoved);
                 }
 
@@ -62,7 +63,7 @@ namespace FlowGraph.UI.NetworkModel
         /// </summary>
         private void Connections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
-            foreach (ConnectionViewModel connection in e.Items)
+            foreach (var connection in e.Items.Cast<AConnectionViewModel>())
             {
                 connection.SourceConnector = null;
                 connection.DestConnector = null;

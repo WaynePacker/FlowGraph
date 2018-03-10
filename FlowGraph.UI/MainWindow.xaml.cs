@@ -86,7 +86,7 @@ namespace FlowGraph.UI
         private void NetworkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
         {
             Point curDragPoint = Mouse.GetPosition(networkControl);
-            var connection = (ConnectionViewModel)e.Connection;
+            var connection = (AConnectionViewModel)e.Connection;
             this.ViewModel.ConnectionDragging(curDragPoint, connection);
         }
 
@@ -97,7 +97,7 @@ namespace FlowGraph.UI
         {
             var connectorDraggedOut = (ConnectorViewModel)e.ConnectorDraggedOut;
             var connectorDraggedOver = (ConnectorViewModel)e.ConnectorDraggedOver;
-            var newConnection = (ConnectionViewModel)e.Connection;
+            var newConnection = (AConnectionViewModel)e.Connection;
             this.ViewModel.ConnectionDragCompleted(newConnection, connectorDraggedOut, connectorDraggedOver);
         }
 
@@ -131,7 +131,7 @@ namespace FlowGraph.UI
         /// </summary>
         private void DeleteConnection_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var connection = (ConnectionViewModel)e.Parameter;
+            var connection = (AConnectionViewModel)e.Parameter;
             this.ViewModel.DeleteConnection(connection);
         }
 

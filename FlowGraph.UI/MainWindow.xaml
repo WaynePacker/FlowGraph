@@ -204,7 +204,7 @@
 
             In this sample a curved arrow represents connections between nodes.
             -->
-            <DataTemplate DataType="{x:Type NetworkModel:ConnectionViewModel}" >
+            <DataTemplate DataType="{x:Type NetworkModel:StandardConnectionViewModel}" >
 
                 <!-- 
                 An adorned control is used, to represent the connection. 

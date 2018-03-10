@@ -147,12 +147,12 @@ namespace FlowGraph.UI
         /// <summary>
         /// Called when the user has started to drag out a connector, thus creating a new connection.
         /// </summary>
-        public ConnectionViewModel ConnectionDragStarted(ConnectorViewModel draggedOutConnector, Point curDragPoint)
+        public AConnectionViewModel ConnectionDragStarted(ConnectorViewModel draggedOutConnector, Point curDragPoint)
         {
             //
             // Create a new connection to add to the view-model.
             //
-            var connection = new ConnectionViewModel();
+            var connection = new StandardConnectionViewModel();
 
             switch (draggedOutConnector.Type)
             {
@@ -261,7 +261,7 @@ namespace FlowGraph.UI
         /// <summary>
         /// Called as the user continues to drag the connection.
         /// </summary>
-        public void ConnectionDragging(Point curDragPoint, ConnectionViewModel connection)
+        public void ConnectionDragging(Point curDragPoint, AConnectionViewModel connection)
         {
             if (connection.DestConnector == null)
             {
@@ -276,7 +276,7 @@ namespace FlowGraph.UI
         /// <summary>
         /// Called when the user has finished dragging out the new connection.
         /// </summary>
-        public void ConnectionDragCompleted(ConnectionViewModel newConnection, ConnectorViewModel connectorDraggedOut, ConnectorViewModel connectorDraggedOver)
+        public void ConnectionDragCompleted(AConnectionViewModel newConnection, ConnectorViewModel connectorDraggedOut, ConnectorViewModel connectorDraggedOver)
         {
             if (connectorDraggedOver == null)
             {
@@ -362,7 +362,7 @@ namespace FlowGraph.UI
         /// Retrieve a connection between the two connectors.
         /// Returns null if there is no connection between the connectors.
         /// </summary>
-        public ConnectionViewModel FindConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
+        public AConnectionViewModel FindConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
         {
             Trace.Assert(connector1.Type != connector2.Type);
 
@@ -486,7 +486,7 @@ namespace FlowGraph.UI
         /// <summary>
         /// Utility method to delete a connection from the view-model.
         /// </summary>
-        public void DeleteConnection(ConnectionViewModel connection)
+        public void DeleteConnection(AConnectionViewModel connection)
         {
             this.Network.Connections.Remove(connection);
         }
@@ -513,7 +513,7 @@ namespace FlowGraph.UI
             //
             // Create a connection between the nodes.
             //
-            ConnectionViewModel connection = new ConnectionViewModel();
+            AConnectionViewModel connection = new StandardConnectionViewModel();
             connection.SourceConnector = node1.OutputConnectors[0];
             connection.DestConnector = node2.InputConnectors[0];
 
