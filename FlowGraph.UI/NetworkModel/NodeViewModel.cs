@@ -11,9 +11,12 @@ namespace FlowGraph.UI.NetworkModel
     /// </summary>
     public sealed class NodeViewModel : ANodeViewModel
     {
-        //Each node will have one parent and one child nodes
-        // exceptions to this will be starting nodes which will only have a child node
-        // and also nodes whos' output connectors are also Nodes like a branch( e.g an if then else statement i.e there are two paths)
+        /// <summary>
+        /// Each node will have one parent and one child nodes
+        /// exceptions to this will be starting nodes which will only have a child node
+        /// and also nodes whos' output connectors are also Nodes like a branch( e.g an if then else statement i.e there are two paths)
+        /// </summary>
+        
         private ConnectorViewModel parentNodeConnection;
         private ConnectorViewModel childNodeConnection;
 

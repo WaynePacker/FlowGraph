@@ -250,6 +250,5 @@ namespace FlowGraph.UI.NetworkModel.Base
         }
 
         #endregion Public Methods
-
     }
 }
