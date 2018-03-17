@@ -182,6 +182,8 @@ namespace FlowGraph.UI.NetworkModel.Base
             set { SetAndNotify(ref isSelected, value); }
         }
 
+        public bool IsRoot => isRootNode;
+
 
         #region Private Methods
 

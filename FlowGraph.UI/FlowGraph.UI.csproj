@@ -97,6 +97,7 @@
     <Compile Include="NetworkModel\Base\AConnectionViewModel.cs" />
     <Compile Include="NetworkModel\Base\ANodeViewModel.cs" />
     <Compile Include="NetworkModel\PathConnectionViewModel.cs" />
+    <Compile Include="NetworkModel\RootNodeViewModel.cs" />
     <Compile Include="Toolbar\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
@@ -105,6 +106,10 @@
     </Compile>
     <Compile Include="Toolbar\ToolbarViewModel.cs" />
     <Page Include="GraphNavigator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NodeTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

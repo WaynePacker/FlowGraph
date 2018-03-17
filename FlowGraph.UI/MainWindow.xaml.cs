@@ -1,4 +1,5 @@
 ﻿using FlowGraph.UI.NetworkModel;
+using FlowGraph.UI.NetworkModel.Base;
 using NetworkUI;
 using System.Windows;
 using System.Windows.Input;
@@ -112,9 +113,17 @@ namespace FlowGraph.UI
         /// <summary>
         /// Event raised to create a new node.
         /// </summary>
-        private void CreateNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CreateStandardNode_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CreateNode();
+            CreateStandardNode();
+        }
+
+        /// <summary>
+        /// Event raised to create a new node.
+        /// </summary>
+        private void CreateRootNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CreateRootNode();
         }
 
         /// <summary>
@@ -122,7 +131,7 @@ namespace FlowGraph.UI
         /// </summary>
         private void DeleteNode_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var node = (NodeViewModel)e.Parameter;
+            var node = (ANodeViewModel)e.Parameter;
             this.ViewModel.DeleteNode(node);
         }
 
@@ -136,12 +145,21 @@ namespace FlowGraph.UI
         }
 
         /// <summary>
-        /// Creates a new node in the network at the current mouse location.
+        /// Creates a new standard node in the network at the current mouse location.
         /// </summary>
-        private void CreateNode()
+        private void CreateStandardNode()
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateNode("New Node!", newNodePosition, true);
+            this.ViewModel.CreateStandardNode("New Standard Node!", newNodePosition, true);
+        }
+
+        /// <summary>
+        /// Creates a new root node in the network at the current mouse location.
+        /// </summary>
+        private void CreateRootNode()
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateRootNode("New Root Node!", newNodePosition, true);
         }
 
         /// <summary>
@@ -154,7 +172,7 @@ namespace FlowGraph.UI
             // has changed.  Push the size of the node through to the view-model.
             //
             var element = (FrameworkElement)sender;
-            var node = (NodeViewModel)element.DataContext;
+            var node = (ANodeViewModel)element.DataContext;
             node.Size = new Size(element.ActualWidth, element.ActualHeight);
         }
     }

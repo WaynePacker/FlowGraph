@@ -1,4 +1,5 @@
 ﻿using FlowGraph.UI.NetworkModel;
+using FlowGraph.UI.NetworkModel.Base;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -280,6 +281,8 @@ namespace FlowGraph.UI
         /// <summary>
         /// Called when the user has finished dragging out the new connection.
         /// </summary>
+        /// 
+        ///TODO: the root node allows you to connect to multiple children, this is incorrect
         public void ConnectionDragCompleted(AConnectionViewModel newConnection, ConnectorViewModel connectorDraggedOut, ConnectorViewModel connectorDraggedOver)
         {
             if (connectorDraggedOver == null)
@@ -318,6 +321,7 @@ namespace FlowGraph.UI
             // The user has dragged the connection on top of another valid connector.
             //
 
+            ///Fucken hell this need some refactoring
 
             //Only one parent- child connection is allowed
             if (validChildToParentType)
@@ -325,12 +329,16 @@ namespace FlowGraph.UI
                 var sourceConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOut : connectorDraggedOver;
                 var destConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOver : connectorDraggedOut;
 
-                var sourceChildConnector = sourceConnector.ParentNode.ChildNodeConnection;
-
-                if (sourceChildConnector.IsConnected)
+                if (!sourceConnector.ParentNode.IsRoot)
                 {
-                    var existingConnection = sourceChildConnector.AttachedConnections.Single(c => c.DestConnector != null);
-                    this.Network.Connections.Remove(existingConnection);
+                    var sourceConnectorParentNode = sourceConnector.ParentNode as NodeViewModel;
+                    var sourceChildConnection = sourceConnectorParentNode.ChildNodeConnection;
+
+                    if (sourceChildConnection.IsConnected)
+                    {
+                        var existingConnection = sourceChildConnection.AttachedConnections.Single(c => c.DestConnector != null);
+                        this.Network.Connections.Remove(existingConnection);
+                    }
                 }
 
             }
@@ -417,7 +425,7 @@ namespace FlowGraph.UI
         /// Delete the node from the view-model.
         /// Also deletes any connections to or from the node.
         /// </summary>
-        public void DeleteNode(NodeViewModel node)
+        public void DeleteNode(ANodeViewModel node)
         {
             //
             // Remove all connections attached to the node.
@@ -433,9 +441,63 @@ namespace FlowGraph.UI
         /// <summary>
         /// Create a node and add it to the view-model.
         /// </summary>
-        public NodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode)
+        public NodeViewModel CreateStandardNode(string name, Point nodeLocation, bool centerNode)
         {
             var node = new NodeViewModel(name, nodeLocation);
+            node.AddInputConnector();
+            node.AddInputConnector();
+            node.AddOutputConnector();
+            node.AddOutputConnector();
+
+            if (centerNode)
+            {
+                // 
+                // We want to center the node.
+                //
+                // For this to happen we need to wait until the UI has determined the 
+                // size based on the node's data-template.
+                //
+                // So we define an anonymous method to handle the SizeChanged event for a node.
+                //
+                // Note: If you don't declare sizeChangedEventHandler before initializing it you will get
+                //       an error when you try and unsubscribe the event from within the event handler.
+                //
+                EventHandler<EventArgs> sizeChangedEventHandler = null;
+                sizeChangedEventHandler =
+                    delegate (object sender, EventArgs e)
+                    {
+                        //
+                        // This event handler will be called after the size of the node has been determined.
+                        // So we can now use the size of the node to modify its position.
+                        //
+                        node.X -= node.Size.Width / 2;
+                        node.Y -= node.Size.Height / 2;
+
+                        //
+                        // Don't forget to unhook the event, after the initial centering of the node
+                        // we don't need to be notified again of any size changes.
+                        //
+                        node.SizeChanged -= sizeChangedEventHandler;
+                    };
+
+                //
+                // Now we hook the SizeChanged event so the anonymous method is called later
+                // when the size of the node has actually been determined.
+                //
+                node.SizeChanged += sizeChangedEventHandler;
+            }
+
+            //
+            // Add the node to the view-model.
+            //
+            this.Network.Nodes.Add(node);
+
+            return node;
+        }
+
+        public ANodeViewModel CreateRootNode(string name, Point nodeLocation, bool centerNode)
+        {
+            var node = new RootNodeViewModel(name, nodeLocation);
             node.AddInputConnector();
             node.AddInputConnector();
             node.AddOutputConnector();
@@ -511,8 +573,8 @@ namespace FlowGraph.UI
             //
             // Create some nodes and add them to the view-model.
             //
-            NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
-            NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
+            NodeViewModel node1 = CreateStandardNode("Node1", new Point(100, 60), false);
+            NodeViewModel node2 = CreateStandardNode("Node2", new Point(350, 80), false);
 
             //
             // Create a connection between the nodes.

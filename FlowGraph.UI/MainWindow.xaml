@@ -31,13 +31,14 @@
                 <!--  Merge in the resource dictionary that is shared between the main window and the overview window. -->
                 <ResourceDictionary Source="SharedVisualTemplates.xaml" />
                 <ResourceDictionary Source="Resources/ImageResources.xaml" />
-
+                <ResourceDictionary Source="NodeTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- UI commands. -->
 
             <RoutedUICommand x:Key="Commands.DeleteSelectedNodes" />
-            <RoutedUICommand x:Key="Commands.CreateNode" />
+            <RoutedUICommand x:Key="Commands.CreateStandardNode" />
+            <RoutedUICommand x:Key="Commands.CreateRootNode" />
             <RoutedUICommand x:Key="Commands.DeleteNode" />
             <RoutedUICommand x:Key="Commands.DeleteConnection" />
             <RoutedUICommand x:Key="Commands.ZoomOut" />
@@ -440,6 +441,122 @@
 
             </DataTemplate>
 
+
+
+
+            <DataTemplate x:Name="RootNodeControl" DataType="{x:Type NetworkModel:RootNodeViewModel}" >
+                <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->
+
+                <Grid MinWidth="120"
+                      Margin="10 6"
+                      SizeChanged="Node_SizeChanged" >
+                    <!-- This rectangle is the main visual for the node. -->
+
+                    <Rectangle x:Name="node"
+                                Stroke="{StaticResource nodeBorderBrush}"
+                                StrokeThickness="1"
+                                Fill="{StaticResource nodeFillBrush}" >
+                        <Rectangle.ContextMenu>
+                            <ContextMenu>
+                                <Menu>
+                                    <MenuItem Header="Delete"   
+                                          Command="{StaticResource Commands.DeleteNode}"
+                                          CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Menu>
+                            </ContextMenu>
+                        </Rectangle.ContextMenu>
+                    </Rectangle>
+
+                    <!-- 
+                        This grid contains the node's connectors.
+                        The margin is negative so that the connectors overlap the body of the node and it's selection border.
+                        -->
+                    <Grid Margin="-6,4,-6,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" MinWidth="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <!-- spacer -->
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Column="3"
+                                Grid.Row="0"
+                                Margin="30 0 0 0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{StaticResource Commands.DeleteNode}"
+                                CommandParameter="{Binding}">
+
+                            <Path Stroke="Red">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigure StartPoint="0,0">
+                                                <LineSegment Point="10,10"/>
+                                            </PathFigure>
+                                            <PathFigure StartPoint="0,10">
+                                                <LineSegment Point="10,0"/>
+                                            </PathFigure>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+
+                        </Button>
+
+                        <!-- The name of the node. -->
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   Text="{Binding Name}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Focusable="True"
+                                   Cursor="Hand"/>
+
+                        <!--Child Connector : Wrap in stack panel for correct cursor-->
+                        <StackPanel Grid.Column="2" Grid.Row="1" Cursor="Hand">
+                            <NetworkUI:ConnectorItem 
+                                                 DataContext="{Binding ChildNodeConnection}"
+                                                 Width="15"
+                                                 Height="15"
+                                                 HorizontalAlignment="Right" />
+                        </StackPanel>
+
+                        <!-- Displays the node's input connectors. -->
+                        <ItemsControl Grid.Column="0"
+                                      Grid.Row="3"
+                                      ItemsSource="{Binding InputConnectors}"
+                                      ItemTemplate="{StaticResource inputConnectorTemplate}"
+                                      Focusable="False" />
+
+                        <!-- Displays the node's output connectors. -->
+                        <ItemsControl Grid.Column="2"
+                                      Grid.Row="3"
+                                      ItemsSource="{Binding OutputConnectors}"
+                                      ItemTemplate="{StaticResource outputConnectorTemplate}"
+                                      Focusable="False" />
+                    </Grid>
+                </Grid>
+
+
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                        <Setter TargetName="node" Property="Stroke" Value="{StaticResource selectedNodeBorderBrush}"/>
+                        <Setter TargetName="node" Property="Fill" Value="{StaticResource selectedNodeFillBrush}"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+
+
+            </DataTemplate>
+
         </ResourceDictionary>
 
     </Window.Resources>
@@ -480,8 +597,12 @@
             Executed="DeleteSelectedNodes_Executed" 
             />
         <CommandBinding 
-            Command="{StaticResource Commands.CreateNode}" 
-            Executed="CreateNode_Executed" 
+            Command="{StaticResource Commands.CreateStandardNode}" 
+            Executed="CreateStandardNode_Executed" 
+            />
+        <CommandBinding 
+            Command="{StaticResource Commands.CreateRootNode}" 
+            Executed="CreateRootNode_Executed" 
             />
         <CommandBinding 
             Command="{StaticResource Commands.DeleteNode}" 
@@ -527,8 +648,11 @@
 
             <MenuItem Header="Add Nodes">
                 <MenuItem Header="Standard Node"
-                          Command="{StaticResource Commands.CreateNode}"
+                          Command="{StaticResource Commands.CreateStandardNode}"
                           ToolTip="Creates a new standard node"/>
+                <MenuItem Header="Root Node"
+                          Command="{StaticResource Commands.CreateRootNode}"
+                          ToolTip="Creates a new Root node"/>
             </MenuItem>
 
             <Separator />
