@@ -110,9 +110,7 @@
             This button is displayed in an adorner when the user hovers the mouse over a node or connection.
             -->
             <ControlTemplate x:Key="deleteButtonTemplate" TargetType="{x:Type Button}" >
-                <Grid
-                    x:Name="grid"
-                    >
+                <Grid x:Name="grid" >
                     <Grid.RenderTransform>
                         <ScaleTransform
                             ScaleX="1"
@@ -261,6 +259,63 @@
                     </ac:AdornedControl.AdornerContent>
                 </ac:AdornedControl>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type NetworkModel:PathConnectionViewModel}" >
+
+                <!-- 
+                An adorned control is used, to represent the connection. 
+                When the user hovers the mouse cursor over the connection, the 
+                'delete connection' adorner pops up and allows them to delete the connection.
+                -->
+                <ac:AdornedControl HorizontalAdornerPlacement="Mouse"
+                         VerticalAdornerPlacement="Mouse"
+                         IsMouseOverShowEnabled="{Binding ElementName=networkControl, Path=IsNotDragging}" >
+
+                    <!-- The connection is represented by a curved arrow. -->
+                    <local:CurvedArrow
+                        Stroke="White"
+                        StrokeThickness="2.5"
+                        Fill="White"
+                        Points="{Binding Points}" />
+
+                    <ac:AdornedControl.AdornerContent>
+
+                        <!-- 
+                        This is the adorner that pops up when the user hovers the mouse over the connection.
+                        It displays a button that the user can click to delete the connection.
+                        -->
+                        <Canvas
+                            x:Name="connectionAdornerCanvas"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Width="30"
+                            Height="30"
+                            >
+                            <Line
+                                X1="0"
+                                Y1="30"
+                                X2="15"
+                                Y2="15"
+                                Stroke="Black"
+                                StrokeThickness="1"
+                                />
+                            <Button
+                                x:Name="deleteConnectionButton"
+                                Canvas.Left="10"
+                                Canvas.Top="0"
+                                Width="20"
+                                Height="20"
+                                Cursor="Hand"
+                                Focusable="False"
+                                Command="{StaticResource Commands.DeleteConnection}"
+                                CommandParameter="{Binding}"
+                                Template="{StaticResource deleteButtonTemplate}"
+                                />
+                        </Canvas>
+                    </ac:AdornedControl.AdornerContent>
+                </ac:AdornedControl>
+            </DataTemplate>
+
 
             <!-- Define a data-template for the 'NodeViewModel' class. -->
             <DataTemplate x:Name="NodeControl" DataType="{x:Type NetworkModel:NodeViewModel}" >

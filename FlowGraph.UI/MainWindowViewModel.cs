@@ -152,7 +152,11 @@ namespace FlowGraph.UI
             //
             // Create a new connection to add to the view-model.
             //
-            var connection = new StandardConnectionViewModel();
+            AConnectionViewModel connection;
+            if (draggedOutConnector.Type == ConnectorType.Parent || draggedOutConnector.Type == ConnectorType.Child)
+                connection = new PathConnectionViewModel();
+            else
+                connection = new StandardConnectionViewModel();
 
             switch (draggedOutConnector.Type)
             {

@@ -1,27 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:FlowGraph.Resources">
-
-    
-    <!--<Style TargetType="ContentControl" x:Key="CancelImage">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ContentControl">
-                    <Viewbox>
-                        <Canvas Width="50" Height="50">
-                            <Path Data="m 8.5820312,279.95898 c -2.1687968,0 -4.3390808,0.82346 -5.9882812,2.47266 -3.29839687,3.2984 -3.29839675,8.67621 
-                                  0,11.97461 3.2984008,3.2984 8.676209,3.2984 11.974609,0 3.298397,-3.2984 3.298397,-8.67621 0,-11.97461 -1.6492,-1.6492 
-                                  -3.817531,-2.47266 -5.9863278,-2.47266 z m 0,1.90235 c 1.6750228,0 3.3492768,0.64029 4.6328128,1.92383 2.567067,2.56707 
-                                  2.567067,6.7005 0,9.26757 -2.567071,2.56708 -6.7005078,2.56708 -9.2675784,0 -2.5670674,-2.56707 -2.5670675,-6.7005 
-                                  0,-9.26757 1.2835353,-1.28354 2.9597425,-1.92383 4.6347656,-1.92383 z"
-                                  Fill="{TemplateBinding Foreground}" />
-                            <Path Data="M 13.809654,283.19084 3.3527342,293.64776" Fill="{TemplateBinding Foreground}" />
-                        </Canvas>
-                    </Viewbox>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="ContentControl" x:Key="CancelImage">
         <Setter Property="Template">
@@ -80,12 +58,32 @@
             </Setter.Value>
         </Setter>
     </Style>
-   
 
-
-
-
-
-
+    <Style TargetType="ContentControl" x:Key="PathConnectorImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Name="svg8" Width="31.749999" Height="31.750001">
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="0" Y="0"/>
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Canvas Name="layer1">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="-265.24998"/>
+                                </Canvas.RenderTransform>
+                                <Path StrokeThickness="0.26458332" Stroke="{TemplateBinding Foreground}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 6.3779855 267.12538 c -2.7482521 0 -4.96356 2.58302 -4.96356 5.78746 v 14.88131 c 0 3.20443 2.2153079 5.78953 4.96356 5.78953 H 19.140789 c 0.884876 0 1.713933 -0.2697 2.432371 -0.74004 8.58e-4 -6.1e-4 0.0022 -0.002 0.0044 -0.003 0.280267 -0.17059 0.491323 -0.3657 0.726577 -0.58056 0.08635 -0.0845 0.132846 -0.13074 0.178011 -0.1786 2.2234 -2.20861 6.791825 -8.2334 6.791825 -8.2334 1.658939 -1.93431 1.659808 -5.05362 8.57e-4 -6.98794 0 0 -4.688059 -6.22765 -6.923888 -8.36725 -0.247993 -0.24574 -0.503268 -0.44358 -0.777408 -0.63255 v 0.004 c -0.718391 -0.46998 -1.547563 -0.73899 -2.43236 -0.73899 z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

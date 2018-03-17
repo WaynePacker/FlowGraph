@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="NetworkModel\Base\AConnectionViewModel.cs" />
+    <Compile Include="NetworkModel\PathConnectionViewModel.cs" />
     <Compile Include="Toolbar\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
