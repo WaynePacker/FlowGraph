@@ -31,6 +31,11 @@ namespace FlowGraph.UI.NetworkModel.Base
 
         #endregion Private Data Members
 
+        /// <summary>
+        /// Default parameterless constructor for factory to create with
+        /// </summary>
+        public ANodeViewModel() { }
+
         public ANodeViewModel(string name, Point nodeLocation)
         {
             Name = name;

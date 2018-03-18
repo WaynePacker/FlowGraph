@@ -1,5 +1,7 @@
-﻿using FlowGraph.UI.NetworkModel;
+﻿using FlowGraph.UI.Interfaces;
+using FlowGraph.UI.NetworkModel;
 using FlowGraph.UI.NetworkModel.Base;
+using FlowGraph.UI.NetworkModel.NodeFactory;
 using NetworkUI;
 using System.Windows;
 using System.Windows.Input;
@@ -150,7 +152,7 @@ namespace FlowGraph.UI
         private void CreateStandardNode()
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateStandardNode("New Standard Node!", newNodePosition, true);
+            this.ViewModel.CreateNode<NodeViewModel>("New Standard Node!", newNodePosition, true);
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace FlowGraph.UI
         private void CreateRootNode()
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateRootNode("New Root Node!", newNodePosition, true);
+            this.ViewModel.CreateNode<RootNodeViewModel>("New Root Node!", newNodePosition, true);
         }
 
         /// <summary>

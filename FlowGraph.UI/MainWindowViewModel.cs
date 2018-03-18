@@ -1,5 +1,7 @@
-﻿using FlowGraph.UI.NetworkModel;
+﻿using FlowGraph.UI.Interfaces;
+using FlowGraph.UI.NetworkModel;
 using FlowGraph.UI.NetworkModel.Base;
+using FlowGraph.UI.NetworkModel.NodeFactory;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -148,7 +150,7 @@ namespace FlowGraph.UI
                         //
                         // The user is dragging out a parent connector (an input) and will connect it to a child connector (an output).
                         //
-                        if(draggedOutConnector.Name == "Parent")
+                        if (draggedOutConnector.Name == "Parent")
                         {
                             connection.DestConnector = draggedOutConnector;
                             connection.SourceConnectorHotspot = curDragPoint;
@@ -158,7 +160,7 @@ namespace FlowGraph.UI
                             connection.SourceConnector = draggedOutConnector;
                             connection.DestConnectorHotspot = curDragPoint;
                         }
-                       
+
                     }
                     break;
                 default:
@@ -312,8 +314,6 @@ namespace FlowGraph.UI
                 }
             }
 
-
-
             //
             // Finalize the connection by attaching it to the connector
             // that the user dragged the mouse over.
@@ -397,112 +397,23 @@ namespace FlowGraph.UI
         }
 
         /// <summary>
-        /// Create a node and add it to the view-model.
+        /// Creates the node according to the type using the factory method
+        /// and add it to the view-model.
         /// </summary>
-        public NodeViewModel CreateStandardNode(string name, Point nodeLocation, bool centerNode)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name">Name of the the node</param>
+        /// <param name="nodeLocation"></param>
+        /// <param name="centerNode">Should the node be centered</param>
+        /// <returns></returns>
+        public ANodeViewModel CreateNode<T>(string name, Point nodeLocation, bool centerNode)
+            where T : INodeViewModel
         {
-            var node = new NodeViewModel(name, nodeLocation);
-            node.AddInputConnector();
-            node.AddInputConnector();
-            node.AddOutputConnector();
-            node.AddOutputConnector();
+            var node = NodeViewModelFactory.Create<T>(name, nodeLocation, 2, 2);
 
             if (centerNode)
-            {
-                // 
-                // We want to center the node.
-                //
-                // For this to happen we need to wait until the UI has determined the 
-                // size based on the node's data-template.
-                //
-                // So we define an anonymous method to handle the SizeChanged event for a node.
-                //
-                // Note: If you don't declare sizeChangedEventHandler before initializing it you will get
-                //       an error when you try and unsubscribe the event from within the event handler.
-                //
-                EventHandler<EventArgs> sizeChangedEventHandler = null;
-                sizeChangedEventHandler =
-                    delegate (object sender, EventArgs e)
-                    {
-                        //
-                        // This event handler will be called after the size of the node has been determined.
-                        // So we can now use the size of the node to modify its position.
-                        //
-                        node.X -= node.Size.Width / 2;
-                        node.Y -= node.Size.Height / 2;
+                CenterNode(node);
 
-                        //
-                        // Don't forget to unhook the event, after the initial centering of the node
-                        // we don't need to be notified again of any size changes.
-                        //
-                        node.SizeChanged -= sizeChangedEventHandler;
-                    };
-
-                //
-                // Now we hook the SizeChanged event so the anonymous method is called later
-                // when the size of the node has actually been determined.
-                //
-                node.SizeChanged += sizeChangedEventHandler;
-            }
-
-            //
-            // Add the node to the view-model.
-            //
-            this.Network.Nodes.Add(node);
-
-            return node;
-        }
-
-        public ANodeViewModel CreateRootNode(string name, Point nodeLocation, bool centerNode)
-        {
-            var node = new RootNodeViewModel(name, nodeLocation);
-            node.AddInputConnector();
-            node.AddInputConnector();
-            node.AddOutputConnector();
-            node.AddOutputConnector();
-
-            if (centerNode)
-            {
-                // 
-                // We want to center the node.
-                //
-                // For this to happen we need to wait until the UI has determined the 
-                // size based on the node's data-template.
-                //
-                // So we define an anonymous method to handle the SizeChanged event for a node.
-                //
-                // Note: If you don't declare sizeChangedEventHandler before initializing it you will get
-                //       an error when you try and unsubscribe the event from within the event handler.
-                //
-                EventHandler<EventArgs> sizeChangedEventHandler = null;
-                sizeChangedEventHandler =
-                    delegate (object sender, EventArgs e)
-                    {
-                        //
-                        // This event handler will be called after the size of the node has been determined.
-                        // So we can now use the size of the node to modify its position.
-                        //
-                        node.X -= node.Size.Width / 2;
-                        node.Y -= node.Size.Height / 2;
-
-                        //
-                        // Don't forget to unhook the event, after the initial centering of the node
-                        // we don't need to be notified again of any size changes.
-                        //
-                        node.SizeChanged -= sizeChangedEventHandler;
-                    };
-
-                //
-                // Now we hook the SizeChanged event so the anonymous method is called later
-                // when the size of the node has actually been determined.
-                //
-                node.SizeChanged += sizeChangedEventHandler;
-            }
-
-            //
-            // Add the node to the view-model.
-            //
-            this.Network.Nodes.Add(node);
+            Network.Nodes.Add(node);
 
             return node;
         }
@@ -518,6 +429,39 @@ namespace FlowGraph.UI
 
         #region Private Methods
 
+
+
+        /// <summary>
+        /// We want to center the node.
+        /// For this to happen we need to wait until the UI has determined the 
+        /// size based on the node's data-template.
+        /// 
+        /// So we define an anonymous method to handle the SizeChanged event for a node.
+        /// 
+        /// Note: If you don't declare sizeChangedEventHandler before initializing it you will get
+        ///       an error when you try and unsubscribe the event from within the event handler.
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        private void CenterNode(ANodeViewModel node)
+        {
+            EventHandler<EventArgs> sizeChangedEventHandler = null;
+            sizeChangedEventHandler =
+                delegate (object sender, EventArgs e)
+                {
+                    // This event handler will be called after the size of the node has been determined.
+                    // So we can now use the size of the node to modify its position.
+                    node.X -= node.Size.Width / 2;
+                    node.Y -= node.Size.Height / 2;
+
+                    // Unhook the event, after the initial centering of the node
+                    // we don't need to be notified again of any size changes.
+                    node.SizeChanged -= sizeChangedEventHandler;
+                };
+
+            node.SizeChanged += sizeChangedEventHandler;
+        }
+
         /// <summary>
         /// A function to conveniently populate the view-model with test data.
         /// </summary>
@@ -531,24 +475,29 @@ namespace FlowGraph.UI
             //
             // Create some nodes and add them to the view-model.
             //
-            NodeViewModel node1 = CreateStandardNode("Node1", new Point(100, 60), false);
-            NodeViewModel node2 = CreateStandardNode("Node2", new Point(350, 80), false);
+            var node1 = (NodeViewModel)CreateNode<NodeViewModel>("Node1", new Point(100, 60), false);
+            var node2 = (NodeViewModel)CreateNode<NodeViewModel>("Node2", new Point(350, 80), false);
 
             //
             // Create a connection between the nodes.
             //
-            AConnectionViewModel connection = new StandardConnectionViewModel();
-            connection.SourceConnector = node1.OutputConnectors[0];
-            connection.DestConnector = node2.InputConnectors[0];
+            AConnectionViewModel connection = new StandardConnectionViewModel
+            {
+                SourceConnector = node1.OutputConnectors[0],
+                DestConnector = node2.InputConnectors[0]
+            };
 
-            AConnectionViewModel Pathconnection = new PathConnectionViewModel();
-            connection.SourceConnector = node1.ChildNodeConnection;
-            connection.DestConnector = node2.ParentNodeConnection;
+            AConnectionViewModel pathconnection = new PathConnectionViewModel
+            {
+                SourceConnector = node1.ChildNodeConnection,
+                DestConnector = node2.ParentNodeConnection
+            };
 
             //
             // Add the connection to the view-model.
             //
             this.Network.Connections.Add(connection);
+            this.Network.Connections.Add(pathconnection);
         }
 
         #endregion Private Methods

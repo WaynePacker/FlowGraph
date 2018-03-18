@@ -94,8 +94,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\INodeViewModel.cs" />
+    <Compile Include="Interfaces\IRootNodeViewModel.cs" />
+    <Compile Include="Interfaces\IStandardNodeViewModel.cs" />
     <Compile Include="NetworkModel\Base\AConnectionViewModel.cs" />
     <Compile Include="NetworkModel\Base\ANodeViewModel.cs" />
+    <Compile Include="NetworkModel\NodeFactory\NodeViewModelFactory.cs" />
     <Compile Include="NetworkModel\PathConnectionViewModel.cs" />
     <Compile Include="NetworkModel\RootNodeViewModel.cs" />
     <Compile Include="Toolbar\Toolbar.xaml.cs">

@@ -1,4 +1,5 @@
-﻿using FlowGraph.UI.NetworkModel.Base;
+﻿using FlowGraph.UI.Interfaces;
+using FlowGraph.UI.NetworkModel.Base;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -9,7 +10,7 @@ namespace FlowGraph.UI.NetworkModel
     /// Defines a node in the view-model.
     /// Nodes are connected to other nodes through attached connectors (aka anchor/connection points).
     /// </summary>
-    public sealed class NodeViewModel : ANodeViewModel
+    public sealed class NodeViewModel : ANodeViewModel, INodeViewModel
     {
 
         #region Internal Data Members
@@ -17,6 +18,24 @@ namespace FlowGraph.UI.NetworkModel
         private ConnectorViewModel parentNodeConnection;
 
         #endregion Internal Data Members
+
+        public NodeViewModel() : base()
+        {
+            ConnectorAddedEvent += NodeViewModel_ConnectorAddedEvent;
+            ConnectorRemovedEvent += NodeViewModel_ConnectorRemovedEvent;
+
+            ParentNodeConnection = new ConnectorViewModel("Parent")
+            {
+                ParentNode = this,
+                Type = ConnectorType.Path
+            };
+
+            ChildNodeConnection = new ConnectorViewModel("Child")
+            {
+                ParentNode = this,
+                Type = ConnectorType.Path
+            };
+        }
 
         public NodeViewModel(string name, Point nodeLocation)
             : base(name, nodeLocation)

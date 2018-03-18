@@ -1,16 +1,31 @@
-﻿using FlowGraph.UI.NetworkModel.Base;
+﻿using FlowGraph.UI.Interfaces;
+using FlowGraph.UI.NetworkModel.Base;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
 namespace FlowGraph.UI.NetworkModel
 {
-    public sealed class RootNodeViewModel : ANodeViewModel
+    public sealed class RootNodeViewModel : ANodeViewModel, IRootNodeViewModel
     {
         #region Internal Data Members
 
 
         #endregion Internal Data Members
+
+        public RootNodeViewModel() : base()
+        {
+            isRootNode = true;
+
+            ConnectorAddedEvent += NodeViewModel_ConnectorAddedEvent;
+            ConnectorRemovedEvent += NodeViewModel_ConnectorRemovedEvent;
+
+            ChildNodeConnection = new ConnectorViewModel("Child")
+            {
+                ParentNode = this,
+                Type = ConnectorType.Path
+            };
+        }
 
         public RootNodeViewModel(string name, Point nodeLocation)
             : base(name, nodeLocation)
