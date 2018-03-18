@@ -15,7 +15,6 @@ namespace FlowGraph.UI.NetworkModel
         #region Internal Data Members
 
         private ConnectorViewModel parentNodeConnection;
-        private ConnectorViewModel childNodeConnection;
 
         #endregion Internal Data Members
 
@@ -29,13 +28,13 @@ namespace FlowGraph.UI.NetworkModel
             ParentNodeConnection = new ConnectorViewModel("Parent")
             {
                 ParentNode = this,
-                Type = ConnectorType.Parent
+                Type = ConnectorType.Path
             };
 
             ChildNodeConnection = new ConnectorViewModel("Child")
             {
                 ParentNode = this,
-                Type = ConnectorType.Child
+                Type = ConnectorType.Path
             };
         }
 
@@ -65,15 +64,6 @@ namespace FlowGraph.UI.NetworkModel
         {
             get { return parentNodeConnection; }
             set { SetAndNotify(ref parentNodeConnection, value); }
-        }
-
-        /// <summary>
-        /// The connector to the Child node of this node
-        /// </summary>
-        public ConnectorViewModel ChildNodeConnection
-        {
-            get { return childNodeConnection; }
-            set { SetAndNotify(ref childNodeConnection, value); }
         }
 
         #endregion Public Properties

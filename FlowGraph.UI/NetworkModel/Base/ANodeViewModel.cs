@@ -26,7 +26,9 @@ namespace FlowGraph.UI.NetworkModel.Base
 
         private ImpObservableCollection<ConnectorViewModel> inputConnectors = null;
         private ImpObservableCollection<ConnectorViewModel> outputConnectors = null;
-        
+
+        private ConnectorViewModel childNodeConnection;
+
         #endregion Private Data Members
 
         public ANodeViewModel(string name, Point nodeLocation)
@@ -183,6 +185,15 @@ namespace FlowGraph.UI.NetworkModel.Base
         }
 
         public bool IsRoot => isRootNode;
+
+        /// <summary>
+        /// The connector to the Child node of this node
+        /// </summary>
+        public ConnectorViewModel ChildNodeConnection
+        {
+            get { return childNodeConnection; }
+            set { SetAndNotify(ref childNodeConnection, value); }
+        }
 
 
         #region Private Methods

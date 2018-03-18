@@ -8,56 +8,17 @@ using Utils;
 
 namespace FlowGraph.UI
 {
-    /// <summary>
-    /// The view-model for the main window.
-    /// </summary>
     public class MainWindowViewModel : AbstractModelBase
     {
         #region Internal Data Members
 
-        /// <summary>
-        /// This is the network that is displayed in the window.
-        /// It is the main part of the view-model.
-        /// </summary>
         public NetworkViewModel network = null;
-
-        ///
-        /// The current scale at which the content is being viewed.
-        /// 
         private double contentScale = 1;
-
-        ///
-        /// The X coordinate of the offset of the viewport onto the content (in content coordinates).
-        /// 
         private double contentOffsetX = 0;
-
-        ///
-        /// The Y coordinate of the offset of the viewport onto the content (in content coordinates).
-        /// 
         private double contentOffsetY = 0;
-
-        ///
-        /// The width of the content (in content coordinates).
-        /// 
         private double contentWidth = 1600;
-
-        ///
-        /// The heigth of the content (in content coordinates).
-        /// 
         private double contentHeight = 900;
-
-        ///
-        /// The width of the viewport onto the content (in content coordinates).
-        /// The value for this is actually computed by the main window's ZoomAndPanControl and update in the
-        /// view-model so that the value can be shared with the overview window.
-        /// 
         private double contentViewportWidth = 0;
-
-        ///
-        /// The height of the viewport onto the content (in content coordinates).
-        /// The value for this is actually computed by the main window's ZoomAndPanControl and update in the
-        /// view-model so that the value can be shared with the overview window.
-        /// 
         private double contentViewportHeight = 0;
 
         #endregion Internal Data Members
@@ -154,7 +115,8 @@ namespace FlowGraph.UI
             // Create a new connection to add to the view-model.
             //
             AConnectionViewModel connection;
-            if (draggedOutConnector.Type == ConnectorType.Parent || draggedOutConnector.Type == ConnectorType.Child)
+
+            if (draggedOutConnector.Type == ConnectorType.Path)
                 connection = new PathConnectionViewModel();
             else
                 connection = new StandardConnectionViewModel();
@@ -181,22 +143,22 @@ namespace FlowGraph.UI
                         connection.DestConnectorHotspot = curDragPoint;
                     }
                     break;
-                case ConnectorType.Parent:
+                case ConnectorType.Path:
                     {
                         //
                         // The user is dragging out a parent connector (an input) and will connect it to a child connector (an output).
                         //
-                        connection.DestConnector = draggedOutConnector;
-                        connection.SourceConnectorHotspot = curDragPoint;
-                    }
-                    break;
-                case ConnectorType.Child:
-                    {
-                        //
-                        // The user is dragging out a child connector (an output) and will connect it to a parent connector (an input).
-                        //
-                        connection.SourceConnector = draggedOutConnector;
-                        connection.DestConnectorHotspot = curDragPoint;
+                        if(draggedOutConnector.Name == "Parent")
+                        {
+                            connection.DestConnector = draggedOutConnector;
+                            connection.SourceConnectorHotspot = curDragPoint;
+                        }
+                        else
+                        {
+                            connection.SourceConnector = draggedOutConnector;
+                            connection.DestConnectorHotspot = curDragPoint;
+                        }
+                       
                     }
                     break;
                 default:
@@ -230,7 +192,7 @@ namespace FlowGraph.UI
                 var sourceConnector = draggedOutConnector;
                 var destConnector = draggedOverConnector;
 
-                var validChildToParentType = sourceConnector.Type == ConnectorType.Child && destConnector.Type == ConnectorType.Parent;
+                var validChildToParentType = sourceConnector.Type == ConnectorType.Path && destConnector.Type == ConnectorType.Path;
                 var validOutputToInpuType = sourceConnector.Type == ConnectorType.Output && destConnector.Type == ConnectorType.Input;
 
 
@@ -296,7 +258,7 @@ namespace FlowGraph.UI
             }
 
 
-            var validChildToParentType = connectorDraggedOut.Type == ConnectorType.Child && connectorDraggedOver.Type == ConnectorType.Parent;
+            var validChildToParentType = connectorDraggedOut.Type == ConnectorType.Path && connectorDraggedOver.Type == ConnectorType.Path;
             var validOutputToInpuType = connectorDraggedOut.Type == ConnectorType.Output && connectorDraggedOver.Type == ConnectorType.Input;
             //
             // Only allow connections from output connector to input connector (ie each
@@ -326,21 +288,17 @@ namespace FlowGraph.UI
             //Only one parent- child connection is allowed
             if (validChildToParentType)
             {
-                var sourceConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOut : connectorDraggedOver;
-                var destConnector = connectorDraggedOut.Type == ConnectorType.Child ? connectorDraggedOver : connectorDraggedOut;
+                var isConnectingToChild = connectorDraggedOut.Type == ConnectorType.Path && connectorDraggedOut.Name == "Child";
+                var sourceConnector = isConnectingToChild ? connectorDraggedOut : connectorDraggedOver;
+                var destConnector = isConnectingToChild ? connectorDraggedOver : connectorDraggedOut;
 
-                if (!sourceConnector.ParentNode.IsRoot)
+                var sourceChildConnection = sourceConnector.ParentNode.ChildNodeConnection;
+
+                if (sourceChildConnection.IsConnected)
                 {
-                    var sourceConnectorParentNode = sourceConnector.ParentNode as NodeViewModel;
-                    var sourceChildConnection = sourceConnectorParentNode.ChildNodeConnection;
-
-                    if (sourceChildConnection.IsConnected)
-                    {
-                        var existingConnection = sourceChildConnection.AttachedConnections.Single(c => c.DestConnector != null);
-                        this.Network.Connections.Remove(existingConnection);
-                    }
+                    var existingConnection = sourceChildConnection.AttachedConnections.Single(c => c.DestConnector != null);
+                    this.Network.Connections.Remove(existingConnection);
                 }
-
             }
             else
             {
@@ -582,6 +540,10 @@ namespace FlowGraph.UI
             AConnectionViewModel connection = new StandardConnectionViewModel();
             connection.SourceConnector = node1.OutputConnectors[0];
             connection.DestConnector = node2.InputConnectors[0];
+
+            AConnectionViewModel Pathconnection = new PathConnectionViewModel();
+            connection.SourceConnector = node1.ChildNodeConnection;
+            connection.DestConnector = node2.ParentNodeConnection;
 
             //
             // Add the connection to the view-model.

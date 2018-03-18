@@ -5,7 +5,6 @@
         Undefined,
         Input,
         Output,
-        Parent,
-        Child
+        Path,
     }
 }

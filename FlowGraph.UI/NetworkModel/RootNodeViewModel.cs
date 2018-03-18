@@ -8,7 +8,7 @@ namespace FlowGraph.UI.NetworkModel
     public sealed class RootNodeViewModel : ANodeViewModel
     {
         #region Internal Data Members
-        private ConnectorViewModel childNodeConnection;
+
 
         #endregion Internal Data Members
 
@@ -23,20 +23,11 @@ namespace FlowGraph.UI.NetworkModel
             ChildNodeConnection = new ConnectorViewModel("Child")
             {
                 ParentNode = this,
-                Type = ConnectorType.Child
+                Type = ConnectorType.Path
             };
         }
 
         #region Public Properties
-
-        /// <summary>
-        /// The connector to the Child node of this node
-        /// </summary>
-        public ConnectorViewModel ChildNodeConnection
-        {
-            get { return childNodeConnection; }
-            set { SetAndNotify(ref childNodeConnection, value); }
-        }
 
         /// <summary>
         /// A helper property that retrieves a list (a new list each time) of all connections attached to the node. 
