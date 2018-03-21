@@ -333,11 +333,9 @@
                                 Fill="{StaticResource nodeFillBrush}" >
                         <Rectangle.ContextMenu>
                             <ContextMenu>
-                                <Menu>
-                                    <MenuItem Header="Delete"   
+                                <MenuItem Header="Delete"   
                                           Command="{StaticResource Commands.DeleteNode}"
                                           CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Menu>
                             </ContextMenu>
                         </Rectangle.ContextMenu>
                     </Rectangle>
@@ -354,42 +352,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <!-- spacer -->
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Column="3"
-                                Grid.Row="0"
-                                Margin="30 0 0 0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{StaticResource Commands.DeleteNode}"
-                                CommandParameter="{Binding}">
-
-                            <Path Stroke="Red">
-                                <Path.Data>
-                                    <PathGeometry>
-                                        <PathGeometry.Figures>
-                                            <PathFigure StartPoint="0,0">
-                                                <LineSegment Point="10,10"/>
-                                            </PathFigure>
-                                            <PathFigure StartPoint="0,10">
-                                                <LineSegment Point="10,0"/>
-                                            </PathFigure>
-                                        </PathGeometry.Figures>
-                                    </PathGeometry>
-                                </Path.Data>
-                            </Path>
-
-                        </Button>
-
                         <!-- The name of the node. -->
                         <TextBlock Grid.Column="1"
-                                   Grid.Row="1"
+                                   Grid.Row="0"
                                    Text="{Binding Name}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -398,7 +368,7 @@
 
                         <!--Parent Connector : Wrap in stack panel for correct cursor-->
 
-                        <StackPanel Grid.Column="0" Grid.Row="1" Cursor="Hand">
+                        <StackPanel Grid.Column="0" Grid.Row="0" Cursor="Hand">
                             <NetworkUI:ConnectorItem 
                                                  DataContext="{Binding ParentNodeConnection}"
                                                  Width="15"
@@ -406,7 +376,7 @@
                                                  HorizontalAlignment="Left" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="2" Grid.Row="1" Cursor="Hand">
+                        <StackPanel Grid.Column="2" Grid.Row="0" Cursor="Hand">
                             <NetworkUI:ConnectorItem 
                                                  DataContext="{Binding ChildNodeConnection}"
                                                  Width="15"
@@ -416,14 +386,14 @@
 
                         <!-- Displays the node's input connectors. -->
                         <ItemsControl Grid.Column="0"
-                                      Grid.Row="3"
+                                      Grid.Row="2"
                                       ItemsSource="{Binding InputConnectors}"
                                       ItemTemplate="{StaticResource inputConnectorTemplate}"
                                       Focusable="False" />
 
                         <!-- Displays the node's output connectors. -->
                         <ItemsControl Grid.Column="2"
-                                      Grid.Row="3"
+                                      Grid.Row="2"
                                       ItemsSource="{Binding OutputConnectors}"
                                       ItemTemplate="{StaticResource outputConnectorTemplate}"
                                       Focusable="False" />
@@ -458,11 +428,9 @@
                                 Fill="{StaticResource nodeFillBrush}" >
                         <Rectangle.ContextMenu>
                             <ContextMenu>
-                                <Menu>
-                                    <MenuItem Header="Delete"   
+                                <MenuItem Header="Delete"   
                                           Command="{StaticResource Commands.DeleteNode}"
                                           CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Menu>
                             </ContextMenu>
                         </Rectangle.ContextMenu>
                     </Rectangle>
@@ -479,42 +447,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                             <!-- spacer -->
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Column="3"
-                                Grid.Row="0"
-                                Margin="30 0 0 0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{StaticResource Commands.DeleteNode}"
-                                CommandParameter="{Binding}">
-
-                            <Path Stroke="Red">
-                                <Path.Data>
-                                    <PathGeometry>
-                                        <PathGeometry.Figures>
-                                            <PathFigure StartPoint="0,0">
-                                                <LineSegment Point="10,10"/>
-                                            </PathFigure>
-                                            <PathFigure StartPoint="0,10">
-                                                <LineSegment Point="10,0"/>
-                                            </PathFigure>
-                                        </PathGeometry.Figures>
-                                    </PathGeometry>
-                                </Path.Data>
-                            </Path>
-
-                        </Button>
-
                         <!-- The name of the node. -->
                         <TextBlock Grid.Column="1"
-                                   Grid.Row="1"
+                                   Grid.Row="0"
                                    Text="{Binding Name}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -522,7 +462,7 @@
                                    Cursor="Hand"/>
 
                         <!--Child Connector : Wrap in stack panel for correct cursor-->
-                        <StackPanel Grid.Column="2" Grid.Row="1" Cursor="Hand">
+                        <StackPanel Grid.Column="2" Grid.Row="0" Cursor="Hand">
                             <NetworkUI:ConnectorItem 
                                                  DataContext="{Binding ChildNodeConnection}"
                                                  Width="15"
@@ -532,14 +472,14 @@
 
                         <!-- Displays the node's input connectors. -->
                         <ItemsControl Grid.Column="0"
-                                      Grid.Row="3"
+                                      Grid.Row="2"
                                       ItemsSource="{Binding InputConnectors}"
                                       ItemTemplate="{StaticResource inputConnectorTemplate}"
                                       Focusable="False" />
 
                         <!-- Displays the node's output connectors. -->
                         <ItemsControl Grid.Column="2"
-                                      Grid.Row="3"
+                                      Grid.Row="2"
                                       ItemsSource="{Binding OutputConnectors}"
                                       ItemTemplate="{StaticResource outputConnectorTemplate}"
                                       Focusable="False" />

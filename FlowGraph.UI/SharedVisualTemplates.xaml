@@ -97,7 +97,7 @@
                 <!-- The 'ConnectorItem' or anchor point for the connector. -->
                 <NetworkUI:ConnectorItem />
 
-                <!-- Show a black dot at the start of the arrow when connected. -->
+                <!-- Show a dot at the start of the arrow when connected. -->
 
                 <Ellipse Visibility="{Binding IsConnectionAttached, Converter={StaticResource booleanToVisibilityConverter}}"
                          Margin="3"
