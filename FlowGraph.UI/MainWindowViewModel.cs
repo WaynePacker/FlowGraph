@@ -1,5 +1,4 @@
-﻿using FlowGraph.UI.Interfaces;
-using FlowGraph.UI.NetworkModel;
+﻿using FlowGraph.UI.NetworkModel;
 using FlowGraph.UI.NetworkModel.NodeFactory;
 using System;
 using System.Diagnostics;
