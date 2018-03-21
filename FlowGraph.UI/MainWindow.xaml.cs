@@ -13,29 +13,23 @@ namespace FlowGraph.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            viewModel = (MainWindowViewModel)DataContext;
         }
 
         /// <summary>
         /// Convenient accessor for the view-model.
         /// </summary>
-        public MainWindowViewModel ViewModel
-        {
-            get
-            {
-                return (MainWindowViewModel)DataContext;
-            }
-        }
+        public MainWindowViewModel ViewModel => viewModel;
 
         /// <summary>
         /// Event raised when the Window has loaded.
         /// </summary>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e) { }
 
         /// <summary>
         /// Event raised when the user has started to drag out a connection.
@@ -49,7 +43,7 @@ namespace FlowGraph.UI
             //
             // Delegate the real work to the view model.
             //
-            var connection = this.ViewModel.ConnectionDragStarted(draggedOutConnector, curDragPoint);
+            var connection = ViewModel.ConnectionDragStarted(draggedOutConnector, curDragPoint);
 
             //
             // Must return the view-model object that represents the connection via the event args.
@@ -68,7 +62,7 @@ namespace FlowGraph.UI
             object feedbackIndicator = null;
             bool connectionOk = true;
 
-            this.ViewModel.QueryConnnectionFeedback(draggedOutConnector, draggedOverConnector, out feedbackIndicator, out connectionOk);
+            ViewModel.QueryConnnectionFeedback(draggedOutConnector, draggedOverConnector, out feedbackIndicator, out connectionOk);
 
             //
             // Return the feedback object to NetworkView.
@@ -90,7 +84,7 @@ namespace FlowGraph.UI
         {
             Point curDragPoint = Mouse.GetPosition(networkControl);
             var connection = (AConnectionViewModel)e.Connection;
-            this.ViewModel.ConnectionDragging(curDragPoint, connection);
+            ViewModel.ConnectionDragging(curDragPoint, connection);
         }
 
         /// <summary>
@@ -101,7 +95,7 @@ namespace FlowGraph.UI
             var connectorDraggedOut = (ConnectorViewModel)e.ConnectorDraggedOut;
             var connectorDraggedOver = (ConnectorViewModel)e.ConnectorDraggedOver;
             var newConnection = (AConnectionViewModel)e.Connection;
-            this.ViewModel.ConnectionDragCompleted(newConnection, connectorDraggedOut, connectorDraggedOver);
+            ViewModel.ConnectionDragCompleted(newConnection, connectorDraggedOut, connectorDraggedOver);
         }
 
         /// <summary>
@@ -109,7 +103,7 @@ namespace FlowGraph.UI
         /// </summary>
         private void DeleteSelectedNodes_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            this.ViewModel.DeleteSelectedNodes();
+            ViewModel.DeleteSelectedNodes();
         }
 
         /// <summary>

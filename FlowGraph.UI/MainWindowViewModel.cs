@@ -177,54 +177,19 @@ namespace FlowGraph.UI
 
         /// <summary>
         /// Called to query the application for feedback while the user is dragging the connection.
+        /// Only allow connections from output connector to input connector (ie each
+        /// connector must have a different type or different name).
+        /// Also only allocation from one node to another, never one node back to the same node.
         /// </summary>
         public void QueryConnnectionFeedback(ConnectorViewModel draggedOutConnector, ConnectorViewModel draggedOverConnector, out object feedbackIndicator, out bool connectionOk)
         {
-            if (draggedOutConnector == draggedOverConnector)
-            {
-                //
-                // Can't connect to self!
-                // Provide feedback to indicate that this connection is not valid!
-                //
-                feedbackIndicator = new ConnectionBadIndicator();
-                connectionOk = false;
-            }
+            connectionOk = IsValidParentChildPathConnection(draggedOutConnector, draggedOverConnector) ||
+                            IsValidInputOutputConnection(draggedOutConnector, draggedOverConnector);
+
+            if (connectionOk)
+                feedbackIndicator = new ConnectionOkIndicator();
             else
-            {
-                var sourceConnector = draggedOutConnector;
-                var destConnector = draggedOverConnector;
-
-                var validChildToParentType = sourceConnector.Type == ConnectorType.Path && destConnector.Type == ConnectorType.Path;
-                var validOutputToInpuType = sourceConnector.Type == ConnectorType.Output && destConnector.Type == ConnectorType.Input;
-
-
-                //
-                // Only allow connections from output connector to input connector (ie each
-                // connector must have a different type).
-                // Also only allocation from one node to another, never one node back to the same node.
-                //
-                connectionOk = sourceConnector.ParentNode != destConnector.ParentNode &&
-                                 (validChildToParentType || validOutputToInpuType);
-
-                if (connectionOk)
-                {
-                    // 
-                    // Yay, this is a valid connection!
-                    // Provide feedback to indicate that this connection is ok!
-                    //
-                    feedbackIndicator = new ConnectionOkIndicator();
-                }
-                else
-                {
-                    //
-                    // Connectors with the same connector type (eg input & input, or output & output)
-                    // can't be connected.
-                    // Only connectors with separate connector type (eg input & output).
-                    // Provide feedback to indicate that this connection is not valid!
-                    //
-                    feedbackIndicator = new ConnectionBadIndicator();
-                }
-            }
+                feedbackIndicator = new ConnectionBadIndicator();
         }
 
         /// <summary>
@@ -233,20 +198,17 @@ namespace FlowGraph.UI
         public void ConnectionDragging(Point curDragPoint, AConnectionViewModel connection)
         {
             if (connection.DestConnector == null)
-            {
                 connection.DestConnectorHotspot = curDragPoint;
-            }
             else
-            {
                 connection.SourceConnectorHotspot = curDragPoint;
-            }
         }
 
         /// <summary>
         /// Called when the user has finished dragging out the new connection.
+        /// Only one parent- child connection is allowed
+        /// invalid connections are removed
         /// </summary>
         /// 
-        ///TODO: the root node allows you to connect to multiple children, this is incorrect
         public void ConnectionDragCompleted(AConnectionViewModel newConnection, ConnectorViewModel connectorDraggedOut, ConnectorViewModel connectorDraggedOver)
         {
             if (connectorDraggedOver == null)
@@ -255,51 +217,42 @@ namespace FlowGraph.UI
                 // The connection was unsuccessful.
                 // Maybe the user dragged it out and dropped it in empty space.
                 //
-                this.Network.Connections.Remove(newConnection);
+                Network.Connections.Remove(newConnection);
                 return;
             }
 
 
-            var validChildToParentType = connectorDraggedOut.Type == ConnectorType.Path && connectorDraggedOver.Type == ConnectorType.Path;
-            var validOutputToInpuType = connectorDraggedOut.Type == ConnectorType.Output && connectorDraggedOver.Type == ConnectorType.Input;
-            //
-            // Only allow connections from output connector to input connector (ie each
-            // connector must have a different type).
-            // Also only allocation from one node to another, never one node back to the same node.
-            //
-            bool connectionOk = connectorDraggedOut.ParentNode != connectorDraggedOver.ParentNode &&
-                             (validChildToParentType || validOutputToInpuType);
+            var validPathConnection = IsValidParentChildPathConnection(connectorDraggedOut, connectorDraggedOver);
+            bool connectionOk = validPathConnection ||
+                                IsValidInputOutputConnection(connectorDraggedOut, connectorDraggedOver);
 
             if (!connectionOk)
             {
-                //
-                // Connections between connectors that have the same type,
-                // eg input -> input or output -> output, are not allowed,
-                // Remove the connection.
-                //
-                this.Network.Connections.Remove(newConnection);
+                Network.Connections.Remove(newConnection);
                 return;
             }
 
-            //
-            // The user has dragged the connection on top of another valid connector.
-            //
-
-            ///Fucken hell this need some refactoring
-
-            //Only one parent- child connection is allowed
-            if (validChildToParentType)
+            if (validPathConnection)
             {
-                var isConnectingToChild = connectorDraggedOut.Type == ConnectorType.Path && connectorDraggedOut.Name == "Child";
-                var sourceConnector = isConnectingToChild ? connectorDraggedOut : connectorDraggedOver;
-                var destConnector = isConnectingToChild ? connectorDraggedOver : connectorDraggedOut;
+                var isConnectingFromChildToParent = connectorDraggedOut.Name == "Child";
+
+                var sourceConnector = isConnectingFromChildToParent ? connectorDraggedOut : connectorDraggedOver;
+                var destConnector = isConnectingFromChildToParent ? connectorDraggedOver : connectorDraggedOut;
 
                 var sourceChildConnection = sourceConnector.ParentNode.ChildNodeConnection;
+                var destinationParentConnection = (destConnector.ParentNode as NodeViewModel)?.ParentNodeConnection;
+
 
                 if (sourceChildConnection.IsConnected)
                 {
                     var existingConnection = sourceChildConnection.AttachedConnections.Single(c => c.DestConnector != null);
-                    this.Network.Connections.Remove(existingConnection);
+                    Network.Connections.Remove(existingConnection);
+                }
+
+                if (destinationParentConnection != null && destinationParentConnection.IsConnected)
+                {
+                    var existingConnection = destinationParentConnection.AttachedConnections.Single(c => c.SourceConnector != null);
+                    Network.Connections.Remove(existingConnection);
                 }
             }
             else
@@ -310,7 +263,7 @@ namespace FlowGraph.UI
                 var existingConnection = FindConnection(connectorDraggedOut, connectorDraggedOver);
                 if (existingConnection != null)
                 {
-                    this.Network.Connections.Remove(existingConnection);
+                    Network.Connections.Remove(existingConnection);
                 }
             }
 
@@ -319,13 +272,31 @@ namespace FlowGraph.UI
             // that the user dragged the mouse over.
             //
             if (newConnection.DestConnector == null)
-            {
                 newConnection.DestConnector = connectorDraggedOver;
-            }
             else
-            {
                 newConnection.SourceConnector = connectorDraggedOver;
-            }
+        }
+
+        private bool IsValidParentChildPathConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
+        {
+            if (connector1 == connector2)
+                return false;
+
+            var isNotSameName = connector1.Name != connector2.Name;
+            var isValidPath = connector1.Type == ConnectorType.Path && connector2.Type == ConnectorType.Path;
+
+            return isNotSameName && isValidPath;
+        }
+
+        private bool IsValidInputOutputConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
+        {
+            if (connector1 == connector2)
+                return false;
+
+            var validInputToOutput = connector1.Type == ConnectorType.Output && connector2.Type == ConnectorType.Input;
+            var validOutputToInput = connector1.Type == ConnectorType.Input && connector2.Type == ConnectorType.Output;
+
+            return validInputToOutput || validOutputToInput;
         }
 
         /// <summary>
@@ -369,7 +340,7 @@ namespace FlowGraph.UI
         public void DeleteSelectedNodes()
         {
             // Take a copy of the selected nodes list so we can delete nodes while iterating.
-            var nodesCopy = this.Network.Nodes.ToArray();
+            var nodesCopy = Network.Nodes.ToArray();
             foreach (var node in nodesCopy)
             {
                 if (node.IsSelected)
@@ -385,15 +356,8 @@ namespace FlowGraph.UI
         /// </summary>
         public void DeleteNode(ANodeViewModel node)
         {
-            //
-            // Remove all connections attached to the node.
-            //
-            this.Network.Connections.RemoveRange(node.AttachedConnections);
-
-            //
-            // Remove the node from the network.
-            //
-            this.Network.Nodes.Remove(node);
+            Network.Connections.RemoveRange(node.AttachedConnections);
+            Network.Nodes.Remove(node);
         }
 
         /// <summary>

@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:FlowGraph.UI"
                     xmlns:NetworkUI="clr-namespace:NetworkUI;assembly=NetworkUI"
-                    xmlns:NetworkModel="clr-namespace:FlowGraph.UI.NetworkModel">
+                    xmlns:NetworkModel="clr-namespace:FlowGraph.UI.NetworkModel"
+                    xmlns:NetworkModelBase="clr-namespace:FlowGraph.UI.NetworkModel.Base">
 
     <ResourceDictionary.MergedDictionaries>
         <!--  Merge in the resource dictionary that is shared between the main window and the overview window. -->
@@ -135,38 +136,34 @@
         </DataTemplate.Triggers>
 
 
-    </DataTemplate>
+    </DataTemplate> -->
 
 
 
 
-    <DataTemplate x:Name="RootNodeControl" DataType="{x:Type NetworkModel:RootNodeViewModel}" >
-        --><!-- The margin has been selected so that the selection rect nicely covers the entire node. --><!--
-
+    <!--<DataTemplate x:Name="NodeControl" DataType="{x:Type NetworkModelBase:ANodeViewModel}" >
+         
         <Grid MinWidth="120"
-                      Margin="10 6"
-                      SizeChanged="Node_SizeChanged" >
-            --><!-- This rectangle is the main visual for the node. --><!--
+              Margin="10 6"
+              SizeChanged="Node_SizeChanged" >
+        
 
             <Rectangle x:Name="node"
-                                Stroke="{StaticResource nodeBorderBrush}"
-                                StrokeThickness="1"
-                                Fill="{StaticResource nodeFillBrush}" >
+                       Stroke="{StaticResource nodeBorderBrush}"
+                       StrokeThickness="1"
+                       Fill="{StaticResource nodeFillBrush}" >
+                
                 <Rectangle.ContextMenu>
                     <ContextMenu>
                         <Menu>
                             <MenuItem Header="Delete"   
-                                          Command="{StaticResource Commands.DeleteNode}"
-                                          CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                                      Command="{StaticResource Commands.DeleteNode}"
+                                      CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Menu>
                     </ContextMenu>
                 </Rectangle.ContextMenu>
             </Rectangle>
-
-            --><!-- 
-                        This grid contains the node's connectors.
-                        The margin is negative so that the connectors overlap the body of the node and it's selection border.
-                        --><!--
+        
             <Grid Margin="-6,4,-6,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -176,7 +173,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    --><!-- spacer --><!--
+        
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -208,7 +205,7 @@
 
                 </Button>
 
-                --><!-- The name of the node. --><!--
+                 
                 <TextBlock Grid.Column="1"
                                    Grid.Row="1"
                                    Text="{Binding Name}"
@@ -217,7 +214,7 @@
                                    Focusable="True"
                                    Cursor="Hand"/>
 
-                --><!--Child Connector : Wrap in stack panel for correct cursor--><!--
+               
                 <StackPanel Grid.Column="2" Grid.Row="1" Cursor="Hand">
                     <NetworkUI:ConnectorItem 
                                                  DataContext="{Binding ChildNodeConnection}"
@@ -226,14 +223,14 @@
                                                  HorizontalAlignment="Right" />
                 </StackPanel>
 
-                --><!-- Displays the node's input connectors. --><!--
+               
                 <ItemsControl Grid.Column="0"
                                       Grid.Row="3"
                                       ItemsSource="{Binding InputConnectors}"
                                       ItemTemplate="{StaticResource inputConnectorTemplate}"
                                       Focusable="False" />
 
-                --><!-- Displays the node's output connectors. --><!--
+             
                 <ItemsControl Grid.Column="2"
                                       Grid.Row="3"
                                       ItemsSource="{Binding OutputConnectors}"
