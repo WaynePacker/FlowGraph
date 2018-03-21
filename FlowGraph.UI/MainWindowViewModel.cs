@@ -1,6 +1,5 @@
 ﻿using FlowGraph.UI.Interfaces;
 using FlowGraph.UI.NetworkModel;
-using FlowGraph.UI.NetworkModel.Base;
 using FlowGraph.UI.NetworkModel.NodeFactory;
 using System;
 using System.Diagnostics;
@@ -148,9 +147,9 @@ namespace FlowGraph.UI
                 case ConnectorType.Path:
                     {
                         //
-                        // The user is dragging out a parent connector (an input) and will connect it to a child connector (an output).
+                        // The user is dragging out a path connector.
                         //
-                        if (draggedOutConnector.Name == "Parent")
+                        if (draggedOutConnector.Name == NodeViewModel.DefaultLeftNodeConnectorName)
                         {
                             connection.DestConnector = draggedOutConnector;
                             connection.SourceConnectorHotspot = curDragPoint;
@@ -183,7 +182,7 @@ namespace FlowGraph.UI
         /// </summary>
         public void QueryConnnectionFeedback(ConnectorViewModel draggedOutConnector, ConnectorViewModel draggedOverConnector, out object feedbackIndicator, out bool connectionOk)
         {
-            connectionOk = IsValidParentChildPathConnection(draggedOutConnector, draggedOverConnector) ||
+            connectionOk = IsValidPathConnection(draggedOutConnector, draggedOverConnector) ||
                             IsValidInputOutputConnection(draggedOutConnector, draggedOverConnector);
 
             if (connectionOk)
@@ -205,7 +204,7 @@ namespace FlowGraph.UI
 
         /// <summary>
         /// Called when the user has finished dragging out the new connection.
-        /// Only one parent- child connection is allowed
+        /// Only one left- right connection is allowed
         /// invalid connections are removed
         /// </summary>
         /// 
@@ -222,7 +221,7 @@ namespace FlowGraph.UI
             }
 
 
-            var validPathConnection = IsValidParentChildPathConnection(connectorDraggedOut, connectorDraggedOver);
+            var validPathConnection = IsValidPathConnection(connectorDraggedOut, connectorDraggedOver);
             bool connectionOk = validPathConnection ||
                                 IsValidInputOutputConnection(connectorDraggedOut, connectorDraggedOver);
 
@@ -234,24 +233,24 @@ namespace FlowGraph.UI
 
             if (validPathConnection)
             {
-                var isConnectingFromChildToParent = connectorDraggedOut.Name == "Child";
+                var isConnectingFromLeftToRight = connectorDraggedOut.Name == NodeViewModel.DefaultRightNodeConnectorName;
 
-                var sourceConnector = isConnectingFromChildToParent ? connectorDraggedOut : connectorDraggedOver;
-                var destConnector = isConnectingFromChildToParent ? connectorDraggedOver : connectorDraggedOut;
+                var sourceConnector = isConnectingFromLeftToRight ? connectorDraggedOut : connectorDraggedOver;
+                var destConnector = isConnectingFromLeftToRight ? connectorDraggedOver : connectorDraggedOut;
 
-                var sourceChildConnection = sourceConnector.ParentNode.ChildNodeConnection;
-                var destinationParentConnection = (destConnector.ParentNode as NodeViewModel)?.ParentNodeConnection;
+                var sourceRightConnection = sourceConnector.ParentNode.RightNodeConnection;
+                var destinationLeftConnection = destConnector.ParentNode.LeftNodeConnection;
 
 
-                if (sourceChildConnection.IsConnected)
+                if (sourceRightConnection != null && sourceRightConnection.IsConnected)
                 {
-                    var existingConnection = sourceChildConnection.AttachedConnections.Single(c => c.DestConnector != null);
+                    var existingConnection = sourceRightConnection.AttachedConnections.Single(c => c.DestConnector != null);
                     Network.Connections.Remove(existingConnection);
                 }
 
-                if (destinationParentConnection != null && destinationParentConnection.IsConnected)
+                if (destinationLeftConnection != null && destinationLeftConnection.IsConnected)
                 {
-                    var existingConnection = destinationParentConnection.AttachedConnections.Single(c => c.SourceConnector != null);
+                    var existingConnection = destinationLeftConnection.AttachedConnections.Single(c => c.SourceConnector != null);
                     Network.Connections.Remove(existingConnection);
                 }
             }
@@ -277,7 +276,7 @@ namespace FlowGraph.UI
                 newConnection.SourceConnector = connectorDraggedOver;
         }
 
-        private bool IsValidParentChildPathConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
+        private bool IsValidPathConnection(ConnectorViewModel connector1, ConnectorViewModel connector2)
         {
             if (connector1 == connector2)
                 return false;
@@ -354,7 +353,7 @@ namespace FlowGraph.UI
         /// Delete the node from the view-model.
         /// Also deletes any connections to or from the node.
         /// </summary>
-        public void DeleteNode(ANodeViewModel node)
+        public void DeleteNode(NodeViewModel node)
         {
             Network.Connections.RemoveRange(node.AttachedConnections);
             Network.Nodes.Remove(node);
@@ -364,15 +363,15 @@ namespace FlowGraph.UI
         /// Creates the node according to the type using the factory method
         /// and add it to the view-model.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="name">Name of the the node</param>
         /// <param name="nodeLocation"></param>
         /// <param name="centerNode">Should the node be centered</param>
         /// <returns></returns>
-        public ANodeViewModel CreateNode<T>(string name, Point nodeLocation, bool centerNode)
-            where T : INodeViewModel
+        public NodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode, bool hasLeftPath, bool hasRightPath)
         {
-            var node = NodeViewModelFactory.Create<T>(name, nodeLocation, 2, 2);
+            var node = NodeViewModelFactory.Create(name, nodeLocation, hasLeftPath, hasRightPath);
+
+            NodeViewModelFactory.AttachInputAndOutputConnectors(node, 2, 2);//This is preliminary to test things out
 
             if (centerNode)
                 CenterNode(node);
@@ -407,7 +406,7 @@ namespace FlowGraph.UI
         /// 
         /// </summary>
         /// <param name="node"></param>
-        private void CenterNode(ANodeViewModel node)
+        private void CenterNode(NodeViewModel node)
         {
             EventHandler<EventArgs> sizeChangedEventHandler = null;
             sizeChangedEventHandler =
@@ -439,8 +438,8 @@ namespace FlowGraph.UI
             //
             // Create some nodes and add them to the view-model.
             //
-            var node1 = (NodeViewModel)CreateNode<NodeViewModel>("Node1", new Point(100, 60), false);
-            var node2 = (NodeViewModel)CreateNode<NodeViewModel>("Node2", new Point(350, 80), false);
+            var node1 = CreateNode("Test Node1", new Point(100, 60), false, true, true);
+            var node2 = CreateNode("Test Node2", new Point(350, 80), false, true, true);
 
             //
             // Create a connection between the nodes.
@@ -453,8 +452,8 @@ namespace FlowGraph.UI
 
             AConnectionViewModel pathconnection = new PathConnectionViewModel
             {
-                SourceConnector = node1.ChildNodeConnection,
-                DestConnector = node2.ParentNodeConnection
+                SourceConnector = node1.RightNodeConnection,
+                DestConnector = node2.LeftNodeConnection
             };
 
             //

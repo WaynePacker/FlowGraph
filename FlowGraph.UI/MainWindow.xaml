@@ -26,6 +26,7 @@
 
     <Window.Resources>
 
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--  Merge in the resource dictionary that is shared between the main window and the overview window. -->
@@ -53,6 +54,7 @@
             It is used to convert the value of 'ContentScale' to the percentage zoom level that is displayed in the UI.
             -->
             <local:ScaleToPercentConverter x:Key="scaleToPercentConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
             <!-- 
             This graphic is used to indicate that a connection cannot be made between two particular connectors.        
@@ -317,9 +319,8 @@
                 </ac:AdornedControl>
             </DataTemplate>
 
-
             <!-- Define a data-template for the 'NodeViewModel' class. -->
-            <DataTemplate x:Name="NodeControl" DataType="{x:Type NetworkModel:NodeViewModel}" >
+            <DataTemplate x:Name="TempNodeControl" DataType="{x:Type NetworkModel:NodeViewModel}" >
                 <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->
 
                 <Grid MinWidth="120"
@@ -366,19 +367,21 @@
                                    Focusable="True"
                                    Cursor="Hand"/>
 
-                        <!--Parent Connector : Wrap in stack panel for correct cursor-->
+                     
 
-                        <StackPanel Grid.Column="0" Grid.Row="0" Cursor="Hand">
+                        <StackPanel Grid.Column="0" Grid.Row="0" Cursor="Hand" 
+                                    Visibility="{Binding HasLeftPathConnector, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <NetworkUI:ConnectorItem 
-                                                 DataContext="{Binding ParentNodeConnection}"
+                                                 DataContext="{Binding LeftNodeConnection}"
                                                  Width="15"
                                                  Height="15"
                                                  HorizontalAlignment="Left" />
                         </StackPanel>
 
-                        <StackPanel Grid.Column="2" Grid.Row="0" Cursor="Hand">
+                        <StackPanel Grid.Column="2" Grid.Row="0" Cursor="Hand"
+                                    Visibility="{Binding HasRightPathConnector, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <NetworkUI:ConnectorItem 
-                                                 DataContext="{Binding ChildNodeConnection}"
+                                                 DataContext="{Binding RightNodeConnection}"
                                                  Width="15"
                                                  Height="15"
                                                  HorizontalAlignment="Right" />
@@ -407,96 +410,8 @@
                         <Setter TargetName="node" Property="Fill" Value="{StaticResource selectedNodeFillBrush}"/>
                     </DataTrigger>
                 </DataTemplate.Triggers>
-
-
             </DataTemplate>
-
-
-
-
-            <DataTemplate x:Name="RootNodeControl" DataType="{x:Type NetworkModel:RootNodeViewModel}" >
-                <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->
-
-                <Grid MinWidth="120"
-                      Margin="10 6"
-                      SizeChanged="Node_SizeChanged" >
-                    <!-- This rectangle is the main visual for the node. -->
-
-                    <Rectangle x:Name="node"
-                                Stroke="{StaticResource nodeBorderBrush}"
-                                StrokeThickness="1"
-                                Fill="{StaticResource nodeFillBrush}" >
-                        <Rectangle.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Delete"   
-                                          Command="{StaticResource Commands.DeleteNode}"
-                                          CommandParameter="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </ContextMenu>
-                        </Rectangle.ContextMenu>
-                    </Rectangle>
-
-                    <!-- 
-                        This grid contains the node's connectors.
-                        The margin is negative so that the connectors overlap the body of the node and it's selection border.
-                        -->
-                    <Grid Margin="-6,4,-6,4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" MinWidth="10" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <!-- spacer -->
-                            <RowDefinition Height="10" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <!-- The name of the node. -->
-                        <TextBlock Grid.Column="1"
-                                   Grid.Row="0"
-                                   Text="{Binding Name}"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Focusable="True"
-                                   Cursor="Hand"/>
-
-                        <!--Child Connector : Wrap in stack panel for correct cursor-->
-                        <StackPanel Grid.Column="2" Grid.Row="0" Cursor="Hand">
-                            <NetworkUI:ConnectorItem 
-                                                 DataContext="{Binding ChildNodeConnection}"
-                                                 Width="15"
-                                                 Height="15"
-                                                 HorizontalAlignment="Right" />
-                        </StackPanel>
-
-                        <!-- Displays the node's input connectors. -->
-                        <ItemsControl Grid.Column="0"
-                                      Grid.Row="2"
-                                      ItemsSource="{Binding InputConnectors}"
-                                      ItemTemplate="{StaticResource inputConnectorTemplate}"
-                                      Focusable="False" />
-
-                        <!-- Displays the node's output connectors. -->
-                        <ItemsControl Grid.Column="2"
-                                      Grid.Row="2"
-                                      ItemsSource="{Binding OutputConnectors}"
-                                      ItemTemplate="{StaticResource outputConnectorTemplate}"
-                                      Focusable="False" />
-                    </Grid>
-                </Grid>
-
-
-                <DataTemplate.Triggers>
-                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
-                        <Setter TargetName="node" Property="Stroke" Value="{StaticResource selectedNodeBorderBrush}"/>
-                        <Setter TargetName="node" Property="Fill" Value="{StaticResource selectedNodeFillBrush}"/>
-                    </DataTrigger>
-                </DataTemplate.Triggers>
-
-
-            </DataTemplate>
-
+            
         </ResourceDictionary>
 
     </Window.Resources>
@@ -630,7 +545,7 @@
                     Command="{StaticResource Commands.ZoomOut}"
                     ToolTip="Zooms in on the canvas"
                     />
-            
+
         </ContextMenu>
     </Window.ContextMenu>
 

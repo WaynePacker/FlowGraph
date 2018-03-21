@@ -98,10 +98,10 @@
     <Compile Include="Interfaces\IRootNodeViewModel.cs" />
     <Compile Include="Interfaces\IStandardNodeViewModel.cs" />
     <Compile Include="NetworkModel\Base\AConnectionViewModel.cs" />
-    <Compile Include="NetworkModel\Base\ANodeViewModel.cs" />
+    <Compile Include="NetworkModel\NodeViewModel.cs" />
     <Compile Include="NetworkModel\NodeFactory\NodeViewModelFactory.cs" />
     <Compile Include="NetworkModel\PathConnectionViewModel.cs" />
-    <Compile Include="NetworkModel\RootNodeViewModel.cs" />
+    <Compile Include="NetworkModel\StandardConnectionViewModel.cs" />
     <Compile Include="Toolbar\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
@@ -172,11 +172,9 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindow_ZoomAndPan.cs" />
     <Compile Include="MouseHandlingMode.cs" />
-    <Compile Include="NetworkModel\StandardConnectionViewModel.cs" />
     <Compile Include="NetworkModel\ConnectorType.cs" />
     <Compile Include="NetworkModel\ConnectorViewModel.cs" />
     <Compile Include="NetworkModel\NetworkViewModel.cs" />
-    <Compile Include="NetworkModel\NodeViewModel.cs" />
     <Compile Include="OverviewWindow.xaml.cs">
       <DependentUpon>OverviewWindow.xaml</DependentUpon>
     </Compile>

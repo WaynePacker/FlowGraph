@@ -51,25 +51,25 @@ namespace NetworkUI
         /// </summary>
         private void ConnectorItem_DragStarted(object source, ConnectorItemDragStartedEventArgs e)
         {
-            this.Focus();
+            Focus();
 
             e.Handled = true;
 
-            this.IsDragging = true;
-            this.IsNotDragging = false;
-            this.IsDraggingConnection = true;
-            this.IsNotDraggingConnection = false;
+            IsDragging = true;
+            IsNotDragging = false;
+            IsDraggingConnection = true;
+            IsNotDraggingConnection = false;
 
-            this.draggedOutConnectorItem = (ConnectorItem)e.OriginalSource;
-            var nodeItem = this.draggedOutConnectorItem.ParentNodeItem;
-            this.draggedOutNodeDataContext = nodeItem.DataContext != null ? nodeItem.DataContext : nodeItem;
-            this.draggedOutConnectorDataContext = this.draggedOutConnectorItem.DataContext != null ? this.draggedOutConnectorItem.DataContext : this.draggedOutConnectorItem;
+            draggedOutConnectorItem = (ConnectorItem)e.OriginalSource;
+            var nodeItem = draggedOutConnectorItem.ParentNodeItem;
+            draggedOutNodeDataContext = nodeItem.DataContext != null ? nodeItem.DataContext : nodeItem;
+            draggedOutConnectorDataContext = draggedOutConnectorItem.DataContext != null ? draggedOutConnectorItem.DataContext : draggedOutConnectorItem;
 
             //
             // Raise an event so that application code can create a connection and
             // add it to the view-model.
             //
-            ConnectionDragStartedEventArgs eventArgs = new ConnectionDragStartedEventArgs(ConnectionDragStartedEvent, this, this.draggedOutNodeDataContext, this.draggedOutConnectorDataContext);
+            ConnectionDragStartedEventArgs eventArgs = new ConnectionDragStartedEventArgs(ConnectionDragStartedEvent, this, draggedOutNodeDataContext, draggedOutConnectorDataContext);
             RaiseEvent(eventArgs);
 
             //

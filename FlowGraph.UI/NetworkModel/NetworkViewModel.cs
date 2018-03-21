@@ -1,5 +1,4 @@
-﻿using FlowGraph.UI.NetworkModel.Base;
-using System;
+﻿using System;
 using System.Linq;
 using Utils;
 
@@ -15,7 +14,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The collection of nodes in the network.
         /// </summary>
-        private ImpObservableCollection<ANodeViewModel> nodes = null;
+        private ImpObservableCollection<NodeViewModel> nodes = null;
 
         /// <summary>
         /// The collection of connections in the network.
@@ -27,13 +26,13 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The collection of nodes in the network.
         /// </summary>
-        public ImpObservableCollection<ANodeViewModel> Nodes
+        public ImpObservableCollection<NodeViewModel> Nodes
         {
             get
             {
                 if (nodes == null)
                 {
-                    nodes = new ImpObservableCollection<ANodeViewModel>();
+                    nodes = new ImpObservableCollection<NodeViewModel>();
                 }
 
                 return nodes;

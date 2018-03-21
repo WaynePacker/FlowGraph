@@ -1,5 +1,4 @@
-﻿using FlowGraph.UI.NetworkModel.Base;
-using System;
+﻿using System;
 using System.Windows;
 using Utils;
 
@@ -102,7 +101,7 @@ namespace FlowGraph.UI.NetworkModel
         /// <summary>
         /// The parent node that the connector is attached to, or null if the connector is not attached to any node.
         /// </summary>
-        public ANodeViewModel ParentNode
+        public NodeViewModel ParentNode
         {
             get;
             internal set;

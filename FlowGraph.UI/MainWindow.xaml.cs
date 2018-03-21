@@ -1,7 +1,4 @@
-﻿using FlowGraph.UI.Interfaces;
-using FlowGraph.UI.NetworkModel;
-using FlowGraph.UI.NetworkModel.Base;
-using FlowGraph.UI.NetworkModel.NodeFactory;
+﻿using FlowGraph.UI.NetworkModel;
 using NetworkUI;
 using System.Windows;
 using System.Windows.Input;
@@ -127,7 +124,7 @@ namespace FlowGraph.UI
         /// </summary>
         private void DeleteNode_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var node = (ANodeViewModel)e.Parameter;
+            var node = (NodeViewModel)e.Parameter;
             this.ViewModel.DeleteNode(node);
         }
 
@@ -146,7 +143,7 @@ namespace FlowGraph.UI
         private void CreateStandardNode()
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateNode<NodeViewModel>("New Standard Node!", newNodePosition, true);
+            ViewModel.CreateNode("Standard Node", newNodePosition, centerNode: true, hasLeftPath: true, hasRightPath: true);
         }
 
         /// <summary>
@@ -155,7 +152,7 @@ namespace FlowGraph.UI
         private void CreateRootNode()
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateNode<RootNodeViewModel>("New Root Node!", newNodePosition, true);
+            ViewModel.CreateNode("Root Node", newNodePosition, centerNode: true, hasLeftPath: false, hasRightPath: true);
         }
 
         /// <summary>
@@ -168,7 +165,7 @@ namespace FlowGraph.UI
             // has changed.  Push the size of the node through to the view-model.
             //
             var element = (FrameworkElement)sender;
-            var node = (ANodeViewModel)element.DataContext;
+            var node = (NodeViewModel)element.DataContext;
             node.Size = new Size(element.ActualWidth, element.ActualHeight);
         }
     }

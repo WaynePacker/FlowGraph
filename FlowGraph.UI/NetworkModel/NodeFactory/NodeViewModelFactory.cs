@@ -1,7 +1,4 @@
-﻿using FlowGraph.UI.Interfaces;
-using FlowGraph.UI.NetworkModel.Base;
-using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace FlowGraph.UI.NetworkModel.NodeFactory
 {
@@ -10,40 +7,57 @@ namespace FlowGraph.UI.NetworkModel.NodeFactory
     /// </summary>
     public static class NodeViewModelFactory
     {
-        public static ANodeViewModel Create<T>()
-           where T : INodeViewModel
+        private static NodeViewModel Create()
         {
-            return Activator.CreateInstance<T>() as ANodeViewModel;
+            return new NodeViewModel();
         }
 
-        public static ANodeViewModel Create<T>(string name, Point nodeLocation)
-           where T : INodeViewModel
+        private static NodeViewModel Create(string name, Point nodeLocation)
         {
-            var nodeViewModel = Create<T>();
-            nodeViewModel.Name = name;
-            nodeViewModel.X = nodeLocation.X;
-            nodeViewModel.Y = nodeLocation.Y;
+            var node = Create();
+            node.Name = name;
+            node.X = nodeLocation.X;
+            node.Y = nodeLocation.Y;
 
-            return nodeViewModel;
+            return node;
         }
 
-        public static ANodeViewModel Create<T>(string name, Point nodeLocation, int inputCount, int outputCount)
-           where T : INodeViewModel
+        public static NodeViewModel Create(string name, Point nodeLocation, bool hasLeftPath, bool hasRightPath)
         {
-            var nodeViewModel = Create<T>(name, nodeLocation);
+            var node = Create(name, nodeLocation);
 
-            for(var i = 0; i < inputCount; i++)
+            if (hasLeftPath)
             {
-                nodeViewModel.AddInputConnector();
+                node.LeftNodeConnection = new ConnectorViewModel(NodeViewModel.DefaultLeftNodeConnectorName)
+                {
+                    ParentNode = node,
+                    Type = ConnectorType.Path
+                };
+            }
+
+            if (hasRightPath)
+            {
+                node.RightNodeConnection = new ConnectorViewModel(NodeViewModel.DefaultRightNodeConnectorName)
+                {
+                    ParentNode = node,
+                    Type = ConnectorType.Path
+                };
+            }
+
+            return node;
+        }
+
+        public static void AttachInputAndOutputConnectors(NodeViewModel node, int inputCount, int outputCount)
+        {
+            for (var i = 0; i < inputCount; i++)
+            {
+                node.AddInputConnector();
             }
 
             for (var i = 0; i < outputCount; i++)
             {
-                nodeViewModel.AddOutputConnector();
+                node.AddOutputConnector();
             }
-
-            return nodeViewModel;
         }
-
     }
 }
